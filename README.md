@@ -54,21 +54,37 @@
 
   ---
 
-  ## 6.2 Commande de Vitesse via UART
+  <img src="./image-20241107183303442.png" alt="image-20241107183303442" style="zoom: 50%;" />
 
+  ## 6.2 Commande de Vitesse via UART
+  
   **Commande implémentée :**
   - **Format** : `speed XXXX` pour ajuster la vitesse du moteur.
-
+  
   **Étapes effectuées :**
+  
   - Configuration de l’UART pour communication série avec terminal.
   - Détection et traitement de la commande `speed` via putty.
   - Application de la vitesse demandée par ajustement du rapport cyclique PWM.
 
+  
+
+  Après avoir lu le token "XXXX" de speed XXXX, on vérifie la conformité avec l'intervalle de valeurs extremum du cdc.
+
+  On peut ensuite modifier le rapport cyclique de nos 4 canaux PWM via les fonctions HAL_TIM_SET_Compare(). Il suffit de modifier les channels 1 et 2 car leurs complémentaires ont le même rapport cyclique.
+
+  
+
+  
+  
   **Résultats :**
+
   - La commande de vitesse fonctionne, avec validation des valeurs limites (0 à 2174).
+  
+  
 
   **Illustrations :**
-
+  
   - ![Capture d'écran du terminal série avec commandes de vitesse](lien_image)
 
   ---
@@ -82,17 +98,17 @@
   **Observations :**
   - Démarrage progressif du moteur sans à-coups grâce à la rampe de montée.
   - Courants d'appel limités, améliorant la sécurité des transistors.
-
+  
   **Illustrations :**
   - ![Graphique de montée progressive du rapport cyclique](lien_image)
   - ![Photo du moteur en fonctionnement avec indication de la vitesse](lien_image)
-
-  ---
-
-  ## Conclusion
-
-  La configuration des PWM et de l'interface UART a permis de contrôler efficacement la vitesse du moteur en boucle ouverte. Les tests confirment le bon fonctionnement du système, avec un démarrage progressif permettant d’éviter les à-coups et les surintensités.
-
   
-
+  ---
+  
+  ## Conclusion
+  
+  La configuration des PWM et de l'interface UART a permis de contrôler efficacement la vitesse du moteur en boucle ouverte. Les tests confirment le bon fonctionnement du système, avec un démarrage progressif permettant d’éviter les à-coups et les surintensités.
+  
+  
+  
   
