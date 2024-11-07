@@ -93,7 +93,7 @@ void Shell_Loop(void){
 	        int speedValue = atoi(argv[1]);  // Convertir l'argument en entier
 	        // Faites quelque chose avec speed_value, comme l'afficher ou le traiter : on change le duty cycle
 	        if (speedValue < 0) speedValue = 0;
-	           if (speedValue > 945) speedValue = 900;
+	           if (speedValue > 1200) speedValue = 1200;
 
 	           //uint32_t dutyCycle = 614;  // Exemple de valeur de rapport cyclique (60% si la période est 1023)
 

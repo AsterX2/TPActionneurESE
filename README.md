@@ -1,53 +1,98 @@
 # TPActionneurESE
 
+- # Compte Rendu : Contrôle de MCC avec la Carte Nucleo-G474RE
 
+  ## Sommaire
+  - [Introduction](#introduction)
+  - [Objectifs](#objectifs)
+  - [6.1 Génération de 4 PWM](#61-génération-de-4-pwm)
+  - [6.2 Commande de Vitesse via UART](#62-commande-de-vitesse-via-uart)
+  - [6.3 Premiers Tests de Contrôle du Moteur](#63-premiers-tests-de-contrôle-du-moteur)
+  - [Conclusion](#conclusion)
 
-<style>
-  .formula {
-    font-family: "Courier New", Courier, monospace;
-    background-color: #f5f5f5;
-    padding: 4px 8px;
-    border-radius: 4px;
-    display: inline-block;
-  }
-</style>
+  ---
 
-- **Fréquence cible** : <span class="formula">f<sub>PWM</sub> = 20,000</span> Hz
-- **Horloge du timer** : <span class="formula">f<sub>CLK</sub> = 170</span> MHz
-- **Condition supplémentaire** : <span class="formula">ARR > 1024</span>
+  ## Introduction
 
-## Formule de la fréquence PWM en mode aligné au centre
+  Ce document rend compte de la configuration et des tests d'un système de contrôle moteur en boucle ouverte utilisant une carte Nucleo-G474RE.
 
-En mode aligné au centre, la fréquence de PWM est calculée par :
+  ## Objectifs
 
-<div class="formula">
-  f<sub>PWM</sub> = f<sub>CLK</sub> / (2 × PSC × (ARR + 1))
-</div>
+  1. Générer des PWM pour le contrôle moteur.
+  2. Implémenter une interface de commande de vitesse via UART.
+  3. Valider le fonctionnement pratique du système.
 
-où :
+  ---
 
-- <span class="formula">PSC</span> est le prescaler,
-- <span class="formula">ARR</span> est le registre de rechargement automatique.
+  ## 6.1 Génération de 4 PWM
 
-Nous devons trouver des valeurs de <span class="formula">PSC</span> et <span class="formula">ARR</span> qui satisfont cette équation avec les contraintes données.
+  **Paramètres configurés :**
+  - **Fréquence** : 20 kHz
+  - **Résolution** : 10 bits
+  - **Temps mort** : 200 ns, validé par la datasheet des transistors (Rise Time + Turn on delay Time=90 ns).
 
-1. Si <span class="formula">PSC = 2</span>, alors :
-   <div class="formula">ARR + 1 = 4250 / 2 = 2125</div>
-   Ce qui donne :
-   <div class="formula">ARR = 2124</div>
+  **Étapes effectuées :**
+  - Configuration des pins pour les canaux PWM de TIM1.
+  - Paramétrage des sorties complémentaires et des temps morts dans CubeIDE.
 
-Avec **<span class="formula">PSC = 2</span> et <span class="formula">ARR = 2124</span>**, nous avons une solution qui respecte la condition <span class="formula">ARR > 1024</span>.
+  
 
-## Vérification
+  f_PWM = 170,000,000 / (2 * 2 * (2124 + 1))
 
-Pour vérifier la fréquence obtenue avec <span class="formula">PSC = 2</span> et <span class="formula">ARR = 2124</span>, substituons ces valeurs dans la formule :
+  
 
-<div class="formula">
-  f<sub>PWM</sub> = 170,000,000 / (2 × 2 × (2124 + 1))
-</div>
+  f_PWM = 170,000,000 / 8500 = 20,000 Hz
 
-<div class="formula">
-  f<sub>PWM</sub> = 170,000,000 / 8500 = 20,000 Hz
-</div>
+  **Résultats :**
+  - Signaux PWM observés et validés à l'oscilloscope (voir illustration ci-dessous).
 
-Cette configuration donne donc une fréquence de PWM de **20,0000 Hz**, ce qui est exactement la fréquence cible.
+  **Illustrations :**
+
+  <img src="./WhatsApp%20Image%202024-11-06%20at%2019.20.49-1730977352039-2.jpeg" alt="WhatsApp Image 2024-11-06 at 19.20.49" style="zoom: 25%;" />
+
+  ![image-20241107120818936](./image-20241107120818936.png)
+
+  ---
+
+  ## 6.2 Commande de Vitesse via UART
+
+  **Commande implémentée :**
+  - **Format** : `speed XXXX` pour ajuster la vitesse du moteur.
+
+  **Étapes effectuées :**
+  - Configuration de l’UART pour communication série avec terminal.
+  - Détection et traitement de la commande `speed` via putty.
+  - Application de la vitesse demandée par ajustement du rapport cyclique PWM.
+
+  **Résultats :**
+  - La commande de vitesse fonctionne, avec validation des valeurs limites (0 à 2174).
+
+  **Illustrations :**
+
+  - ![Capture d'écran du terminal série avec commandes de vitesse](lien_image)
+
+  ---
+
+  ## 6.3 Premiers Tests de Contrôle du Moteur
+
+  **Conditions de test :**
+  - Rapports cycliques : 50 % et 70 %.
+  - Ajout d'une montée progressive pour limiter les courants d'appel et les à-coups.
+
+  **Observations :**
+  - Démarrage progressif du moteur sans à-coups grâce à la rampe de montée.
+  - Courants d'appel limités, améliorant la sécurité des transistors.
+
+  **Illustrations :**
+  - ![Graphique de montée progressive du rapport cyclique](lien_image)
+  - ![Photo du moteur en fonctionnement avec indication de la vitesse](lien_image)
+
+  ---
+
+  ## Conclusion
+
+  La configuration des PWM et de l'interface UART a permis de contrôler efficacement la vitesse du moteur en boucle ouverte. Les tests confirment le bon fonctionnement du système, avec un démarrage progressif permettant d’éviter les à-coups et les surintensités.
+
+  
+
+  
