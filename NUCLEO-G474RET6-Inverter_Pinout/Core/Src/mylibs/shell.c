@@ -93,18 +93,18 @@ void Shell_Loop(void){
 	        int speedValue = atoi(argv[1]);  // Convertir l'argument en entier
 	        // Faites quelque chose avec speed_value, comme l'afficher ou le traiter : on change le duty cycle
 	        if (speedValue < 0) speedValue = 0;
-	           if (speedValue > 1200) speedValue = 1200;
+	           if (speedValue > 2000) speedValue = 2000;
 
 	           //uint32_t dutyCycle = 614;  // Exemple de valeur de rapport cyclique (60% si la période est 1023)
 
 	           __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, speedValue);//alpha PWM channel 1 changé (U_High).Le complémentaire se change de lui-même par définition
 	           //Il faudra changer le rapport cyclique de l'autre channel (channel 2)
 
-	           //__HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, speedValue); //V_High
+
+	           __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, speedValue); //V_High
 
 	           //uint8_t set_speed="Speed set to"+speedValue;
-	           //HAL_UART_Transmit(&huart2, (uint8_t *)" Speed set to %d \n\r",speedValue, 30, HAL_MAX_DELAY);
-	           HAL_UART_Transmit(&huart2, speedValue, 30, HAL_MAX_DELAY);
+	           //HAL_UART_Transmit(&huart2, speedValue, 30, HAL_MAX_DELAY);
 
 	    } else {
 	        HAL_UART_Transmit(&huart2, (uint8_t *)"Please provide a speed value\r\n", 30, HAL_MAX_DELAY);
