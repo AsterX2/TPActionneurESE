@@ -8,6 +8,8 @@
 #include "mylibs/shell.h"
 #include "tim.h"
 #include <stdlib.h>
+#include "mylibs/cmd_speed.h"
+#include "adc.h"
 
 //#include "../tim.c"
 
@@ -124,6 +126,8 @@ void Shell_Init(void){
 	newCmdReady = 0;
 }*/
 void Shell_Loop(void){
+
+
 	if(uartRxReceived){
 		switch(uartRxBuffer[0]){
 		case ASCII_CR: // Nouvelle ligne, instruction à traiter
@@ -163,10 +167,23 @@ void Shell_Loop(void){
 			HAL_UART_Transmit(&huart2, uartTxBuffer, uartTxStringLength, HAL_MAX_DELAY);
 			commandRecognized = 1;
 		}
+		else if( strcmp(argv[0], "start") == 0){
+			start_PWM (htim1,TIM_CHANNEL_1);
+
+
+		}
+		else if(strcmp(argv[0], "stop") == 0 ){
+			stop_PWM (htim1,TIM_CHANNEL_1);
+			stop_PWM (htim1,TIM_CHANNEL_2);
+
+		}
+
+
 		else if(strcmp(argv[0], "speed") == 0) {
 			if(argc > 1) {
 				int speedValue = atoi(argv[1]);
 				if(speedValue >= 200 && speedValue <= 2000){
+					//On met le rapport cyclique à la valeur du rapport cyclique renseigné
 					__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, speedValue);
 					__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, TIM1->ARR - speedValue);
 					commandRecognized = 1;
@@ -176,6 +193,15 @@ void Shell_Loop(void){
 			} else {
 				HAL_UART_Transmit(&huart2, (uint8_t *)"Please provide a speed value\r\n", strlen("Please provide a speed value\r\n"), HAL_MAX_DELAY);
 			}
+
+			HAL_ADC_Start(&hadc1);
+			HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
+			int value = HAL_ADC_GetValue(&hadc1);
+			float Imes = (value-((1,65))/(0,05));
+			int uartTxStringLength = snprintf((char *)uartTxBuffer, UART_TX_BUFFER_SIZE, "Valeur : %4d \r\n", value);
+			HAL_UART_Transmit(&huart2, uartTxBuffer, uartTxStringLength, HAL_MAX_DELAY);
+			uartTxStringLength = snprintf((char *)uartTxBuffer, UART_TX_BUFFER_SIZE, "ValeurImes : %4d \r\n", Imes);
+			HAL_UART_Transmit(&huart2, uartTxBuffer, uartTxStringLength, HAL_MAX_DELAY);
 		}
 
 		// Si aucune commande n'est reconnue, envoyer "Command not found"
@@ -186,6 +212,7 @@ void Shell_Loop(void){
 		newCmdReady = 0; // Réinitialiser seulement après exécution ou rejet de la commande
 		HAL_UART_Transmit(&huart2, prompt, sizeof(prompt), HAL_MAX_DELAY);
 	}
+
 }
 
 

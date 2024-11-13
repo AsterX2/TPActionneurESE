@@ -1,0 +1,2 @@
+../Core/Src/mylibs/cmd_speed.c:17:6:start_PWM	16	static
+../Core/Src/mylibs/cmd_speed.c:35:6:stop_PWM	8	static

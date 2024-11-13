@@ -5,12 +5,15 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../Core/Src/mylibs/cmd_speed.c \
 ../Core/Src/mylibs/shell.c 
 
 OBJS += \
+./Core/Src/mylibs/cmd_speed.o \
 ./Core/Src/mylibs/shell.o 
 
 C_DEPS += \
+./Core/Src/mylibs/cmd_speed.d \
 ./Core/Src/mylibs/shell.d 
 
 
@@ -21,7 +24,7 @@ Core/Src/mylibs/%.o Core/Src/mylibs/%.su Core/Src/mylibs/%.cyclo: ../Core/Src/my
 clean: clean-Core-2f-Src-2f-mylibs
 
 clean-Core-2f-Src-2f-mylibs:
-	-$(RM) ./Core/Src/mylibs/shell.cyclo ./Core/Src/mylibs/shell.d ./Core/Src/mylibs/shell.o ./Core/Src/mylibs/shell.su
+	-$(RM) ./Core/Src/mylibs/cmd_speed.cyclo ./Core/Src/mylibs/cmd_speed.d ./Core/Src/mylibs/cmd_speed.o ./Core/Src/mylibs/cmd_speed.su ./Core/Src/mylibs/shell.cyclo ./Core/Src/mylibs/shell.d ./Core/Src/mylibs/shell.o ./Core/Src/mylibs/shell.su
 
 .PHONY: clean-Core-2f-Src-2f-mylibs
 

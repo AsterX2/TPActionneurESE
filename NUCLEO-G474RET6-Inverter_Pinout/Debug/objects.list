@@ -9,6 +9,7 @@
 "./Core/Src/system_stm32g4xx.o"
 "./Core/Src/tim.o"
 "./Core/Src/usart.o"
+"./Core/Src/mylibs/cmd_speed.o"
 "./Core/Src/mylibs/shell.o"
 "./Core/Startup/startup_stm32g474retx.o"
 "./Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_hal.o"
