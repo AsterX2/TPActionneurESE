@@ -7,6 +7,7 @@
 #include "usart.h"
 #include "mylibs/shell.h"
 #include "tim.h"
+#include <stdlib.h>
 
 //#include "../tim.c"
 
@@ -47,7 +48,7 @@ void Shell_Init(void){
 	HAL_UART_Transmit(&huart2, prompt, strlen((char *)prompt), HAL_MAX_DELAY);
 }
 
-void Shell_Loop(void){
+/*void Shell_Loop(void){
 	if(uartRxReceived){
 		switch(uartRxBuffer[0]){
 		case ASCII_CR: // Nouvelle ligne, instruction à traiter
@@ -82,35 +83,113 @@ void Shell_Loop(void){
 			int uartTxStringLength = snprintf((char *)uartTxBuffer, UART_TX_BUFFER_SIZE, "Print all available functions here\r\n");
 			HAL_UART_Transmit(&huart2, uartTxBuffer, uartTxStringLength, HAL_MAX_DELAY);
 		}
-		else{
+		else if(strcmp(argv[0], "speed") == 0) {
+			if(argc > 1)
+			{  // Assurez-vous qu'il y a un argument après "speed"
+				int speedValue = atoi(argv[1]);  // Convertir l'argument en entier
+				// Faites quelque chose avec speed_value, comme l'afficher ou le traiter : on change le duty cycle
+				//if (speedValue < 0) speedValue = 0;
+				if ((speedValue) > 200  & (speedValue) < 2000)
+				{
+					//MaJ du rapport cylique
+					//uint32_t dutyCycle = 614;  // Exemple de valeur de rapport cyclique (60% si la période est 1023)
+
+					__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, speedValue);//alpha PWM channel 1 changé (U_High).Le complémentaire se change de lui-même par définition
+					//Il faudra changer le rapport cyclique de l'autre channel (channel 2)
+
+
+					__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, TIM1->ARR-speedValue); //V_High
+				}
+
+
+
+				else{
+
+
+					HAL_UART_Transmit(&huart2, (uint8_t *)"Invalid speed value\r\n", 30, HAL_MAX_DELAY);
+				}
+
+			}
+
+		}
+		else {
+			HAL_UART_Transmit(&huart2, (uint8_t *)"Please provide a speed value\r\n", 30, HAL_MAX_DELAY);
+		}
+	}
+
+	else{
+		HAL_UART_Transmit(&huart2, cmdNotFound, sizeof(cmdNotFound), HAL_MAX_DELAY);
+	}
+	HAL_UART_Transmit(&huart2, prompt, sizeof(prompt), HAL_MAX_DELAY);
+	newCmdReady = 0;
+}*/
+void Shell_Loop(void){
+	if(uartRxReceived){
+		switch(uartRxBuffer[0]){
+		case ASCII_CR: // Nouvelle ligne, instruction à traiter
+			HAL_UART_Transmit(&huart2, newline, sizeof(newline), HAL_MAX_DELAY);
+			cmdBuffer[idx_cmd] = '\0';
+			argc = 0;
+			token = strtok(cmdBuffer, " ");
+			while(token != NULL){
+				argv[argc++] = token;
+				token = strtok(NULL, " ");
+			}
+			idx_cmd = 0;
+			newCmdReady = 1;
+			break;
+		case ASCII_BACK: // Suppression du dernier caractère
+			if (idx_cmd > 0) { // Eviter les index négatifs
+				cmdBuffer[--idx_cmd] = '\0';
+				HAL_UART_Transmit(&huart2, backspace, sizeof(backspace), HAL_MAX_DELAY);
+			}
+			break;
+		default: // Nouveau caractère
+			cmdBuffer[idx_cmd++] = uartRxBuffer[0];
+			HAL_UART_Transmit(&huart2, uartRxBuffer, UART_RX_BUFFER_SIZE, HAL_MAX_DELAY);
+		}
+		uartRxReceived = 0;
+	}
+
+	if(newCmdReady){
+		int commandRecognized = 0; // Indicateur pour vérifier si une commande est reconnue
+
+		if(strcmp(argv[0], "WhereisBrian?") == 0){
+			HAL_UART_Transmit(&huart2, brian, sizeof(brian), HAL_MAX_DELAY);
+			commandRecognized = 1;
+		}
+		else if(strcmp(argv[0], "help") == 0){
+			int uartTxStringLength = snprintf((char *)uartTxBuffer, UART_TX_BUFFER_SIZE, "Print all available functions here\r\n");
+			HAL_UART_Transmit(&huart2, uartTxBuffer, uartTxStringLength, HAL_MAX_DELAY);
+			commandRecognized = 1;
+		}
+		else if(strcmp(argv[0], "speed") == 0) {
+			if(argc > 1) {
+				int speedValue = atoi(argv[1]);
+				if(speedValue >= 200 && speedValue <= 2000){
+					__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, speedValue);
+					__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, TIM1->ARR - speedValue);
+					commandRecognized = 1;
+				} else {
+					HAL_UART_Transmit(&huart2, (uint8_t *)"Invalid speed value\r\n", strlen("Invalid speed value\r\n"), HAL_MAX_DELAY);
+				}
+			} else {
+				HAL_UART_Transmit(&huart2, (uint8_t *)"Please provide a speed value\r\n", strlen("Please provide a speed value\r\n"), HAL_MAX_DELAY);
+			}
+		}
+
+		// Si aucune commande n'est reconnue, envoyer "Command not found"
+		if (!commandRecognized) {
 			HAL_UART_Transmit(&huart2, cmdNotFound, sizeof(cmdNotFound), HAL_MAX_DELAY);
 		}
+
+		newCmdReady = 0; // Réinitialiser seulement après exécution ou rejet de la commande
 		HAL_UART_Transmit(&huart2, prompt, sizeof(prompt), HAL_MAX_DELAY);
-		newCmdReady = 0;
-	}
-	else if(strcmp(argv[0], "speed") == 0) {
-	    if(argc > 1) {  // Assurez-vous qu'il y a un argument après "speed"
-	        int speedValue = atoi(argv[1]);  // Convertir l'argument en entier
-	        // Faites quelque chose avec speed_value, comme l'afficher ou le traiter : on change le duty cycle
-	        if (speedValue < 0) speedValue = 0;
-	           if (speedValue > 2000) speedValue = 2000;
-
-	           //uint32_t dutyCycle = 614;  // Exemple de valeur de rapport cyclique (60% si la période est 1023)
-
-	           __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, speedValue);//alpha PWM channel 1 changé (U_High).Le complémentaire se change de lui-même par définition
-	           //Il faudra changer le rapport cyclique de l'autre channel (channel 2)
-
-
-	           __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_2, speedValue); //V_High
-
-	           //uint8_t set_speed="Speed set to"+speedValue;
-	           //HAL_UART_Transmit(&huart2, speedValue, 30, HAL_MAX_DELAY);
-
-	    } else {
-	        HAL_UART_Transmit(&huart2, (uint8_t *)"Please provide a speed value\r\n", 30, HAL_MAX_DELAY);
-	    }
 	}
 }
+
+
+
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef * huart){
 	uartRxReceived = 1;
