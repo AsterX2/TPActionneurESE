@@ -71,23 +71,59 @@
 
   <img src="./image-20241107183303442.png" alt="image-20241107183303442" style="zoom: 50%;" />
 
-  Implémentation des temps morts de 100 ns estimé à l'aide du fall time et rise time plus leurs temps annexes dans la doc des transistors:
-
   
 
+  Deux registres sont utilisés pour configurer le signal PWM en mode center-aligned :
+
+  - ARR (Auto-Reload Register): Détermine la période du compteur, donc la fréquence du PWM.
+  - CCR (Capture Compare Register): Définit le moment où le signal PWM change d'état, contrôlant ainsi le rapport cyclique.
+  
+  ## Fonctionnement du Mode Center-Aligned
+  
+  En mode center-aligned, le compteur du timer effectue un comptage ascendant puis descendant:
+  
+  - Phase montante: Le compteur compte de 0 jusqu'à la valeur ARR.
+  - Phase descendante : Le compteur compte de ARR jusqu'à 0.
+  
+  Ce mode crée une forme d'onde triangulaire pour le compteur, par opposition au mode edge-aligned où le compteur ne fait qu'incrémenter.
+  
+  ## Rôle de l'ARR
+  
+  - Définit la période du PWM : La période totale du signal PWM est déterminée par le temps nécessaire au compteur pour effectuer une montée et une descente complète.
+  
+  - Formule de la fréquence PWM en mode center-aligned :
+  
+    ​											f_PWM =fhorloge_timer/2*(PSC+1)×(ARR+1)
+  
+    - Le facteur 2 est dû au fait que le compteur monte et descend, donc le temps total est doublé par rapport au mode edge-aligned.
+  
+  ## Rôle du CCR
+  
+  - Contrôle le rapport cyclique : La valeur du CCR détermine les points où le signal PWM change d'état pendant le cycle de comptage.
+  - Commutation du signal :
+    - En montée : Lorsque le compteur atteint la valeur CCR, le signal PWM change d'état (par exemple, passe à haut).
+    - En descente : Lorsque le compteur redescend et atteint à nouveau CCR, le signal PWM revient à son état initial (par exemple, passe à bas).
+  
+  ## Calcul du Rapport Cyclique 
+  
+  Le rapport cyclique est déterminé par la valeur du CCR par rapport à ARR.
+  
+  - **Formule du rapport cyclique** :
+  
+    rapport cyclique=ARR/CCR
+  
+  - **Interprétation** : Le rapport cyclique est le ratio entre le temps pendant lequel le signal est actif (état haut) et la période totale.
+  
+  ## Avantages du Mode Center-Aligned
+  
+  - Réduction des Harmoniques : Le mode center-aligned génère moins d'harmoniques de rang impair, ce qui réduit le bruit électromagnétique.
+  - Symétrie du Signal : Les fronts montants et descendants sont centrés, ce qui est utile pour certaines applications nécessitant une symétrie parfaite.
   
   
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
+  On implémente aussi des temps morts de 100 ns estimé à l'aide du fall time et rise time plus leurs temps annexes dans la doc des transistors:
   
   
   
@@ -108,10 +144,6 @@
   
   On peut ensuite modifier le rapport cyclique de nos 4 canaux PWM via les fonctions HAL_TIM_SET_Compare(). Il suffit de modifier les channels 1 et 2 car leurs complémentaires ont le même rapport cyclique.
   
-  
-  
-  **Résultats :**
-  
   - La commande de vitesse fonctionne, avec validation des valeurs limites (0 à 2174).
   
   ---
@@ -119,22 +151,20 @@
   ## 6.3 Premiers Tests de Contrôle du Moteur
   
   **Conditions de test :**
-  - Rapports cycliques : 50 % et 70 %.
-  - Augmentation graduelle pour éviter les à coups trop fort
+  - Rapports cycliques : 50 % et 70 %
   
   **Observations :**
   - Comme attendu les phases U et V se compensent à 50% du fait du mode center alined.
   - Courants d'appel limités, améliorant la sécurité des transistors.
+  - 
   
   **Vue de oscilloscope à un rapport cyclique de 40% et 60% :**
-  
-  
   
   ![tek00000](./repoimg/tek00000.png)
   
   ![tek00001](./repoimg/tek00001.png)
   
-  ## 
+  
   
   ### 7.2. Mesure du courant
   
@@ -253,3 +283,26 @@ L'asservissement en vitesse consiste à contrôler la vitesse du moteur de mani�
 - Avantages:
   - Réponse rapide aux perturbations.
   - Meilleure stabilité et précision du système. Nous aurions pu ensuite les mesurée depuis notre code.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
