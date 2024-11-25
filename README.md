@@ -237,30 +237,14 @@ On utilise le Timer 1 qui génère les pwm pour déclencher un Update Event. Le 
 
 
 
-![image-20241125183823804](/home/vincent/Documents/ese_3a/actionneur/TPActionneurESE/assets/image-20241125183823804.png)
+![image-20241125183823804](./repoimg/image-20241125183823804.png)
 
 ​     
 
 Dans l'ADC, on paramètre le lancement de la conversion de l'ADCsur un événement externe en l'occurence sur le TIM1 (en Trigger Output Event).
-![image-20241125234352010](/home/vincent/Documents/ese_3a/actionneur/TPActionneurESE/assets/image-20241125234352010.png)
+![image-20241125234352010](./repoimg/image-20241125234352010.png)
 
 Dans NVIC TIM1, on coche Update interrupt.
-
-
-
-
-
----
-
-![image-20241120173111108](/home/vincent/Documents/ese_3a/actionneur/TPActionneurESE/assets/image-20241120173111108.png)
-
-
-
-
-
-![image-20241120180534746](/home/vincent/Documents/ese_3a/actionneur/TPActionneurESE/assets/image-20241120180534746.png)
-
-
 
 ![image-20241120173111108](./repoimg/image-20241120173111108.png)
 
@@ -358,7 +342,11 @@ L'asservissement en vitesse consiste à contrôler la vitesse du moteur de mani�
 
 
 
+## Auteurs
 
+Vincent Lakhmeche	
+
+Karim Jerjoub
 
 
 
