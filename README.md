@@ -127,9 +127,84 @@
   
   
   
+  - ## 6.3 Premiers Tests de Contrôle du Moteur
+  
+    **Conditions de test :**
+  
+    - Rapports cycliques : 50 % et 70 %.
+    - Ajout d'une montée progressive pour limiter les courants d'appel et les à-coups.
+  
+    **Observations :**
+  
+    - Démarrage progressif du moteur sans à-coups grâce à la rampe de montée.
+    - Courants d'appel limités, améliorant la sécurité des transistors.
+  
+    **Illustrations :**
+  
+    - ![Graphique de montée progressive du rapport cyclique](./../../../Downloads/lien_image)
+    - ![Photo du moteur en fonctionnement avec indication de la vitesse](./../../../Downloads/lien_image)
+  
+    ---
+  
+    ## Conclusion
+  
+    La configuration des PWM et de l'interface UART a permis de contrôler efficacement la vitesse du moteur en boucle ouverte. Les tests confirment le bon fonctionnement du système, avec un démarrage progressif permettant d’éviter les à-coups et les surintensités.
+  
+    ejgzahf
+  
+  
+  
+  ### 7.2. Mesure du courant
+  
+  A partir de la documentation (schéma KiCad) : 
+  
+  - Définir quel(s) courant(s) vous devez mesurer,
+  
+    Nous devons mesurer U_Imes et V_Imes. La mesure de courant est effectué par GO 10-SME/SP3 puis est transmise aux pins PA1 et PB1 de la nucleo.
+  
+    
+  
+  - Définir les fonctions de transfert des capteurs de mesure de courant (lecture datasheet),
+  
+  On considère le gain et l'offset du capteur, sensitivity à 50 mV/A et 1,65V pour la reference de tension
+  
+  ![image-20241113165546988](./../../../../../home/vincent/Documents/ese_3a/reseaux_bus_de_terrain/bus_reseaux/docs_annexes/img/23_oct_18h59/image-20241113165546988.png)
+  
+  Soit, 
+  
+  ​		Vout= 1,65 + 0.05 * Imes
+  
+  Nous allons maintenant pouvoir configurer l'ADC en fonction de ceci.
+  
+  
+  
+  - Déterminer les pin du stm32 utilisés pour faire ces mesures de courant,
+  
+  PA1 et PB1
+  
+  
+  
+  - Etablir une première mesure de courant avec les ADC en Pooling. Faites des  tests à vitesse nulle, non nulle, et en charge (rajouter un couple  resistif en consommant du courant sur la machine synchrone couplée à la  MCC).
+  
+  
+  
+  
+  
   
   
   ---
+  
+  ![image-20241120173111108](./repoimg/image-20241120173111108.png)
+  
+  
+  
+  
+  
+  ![image-20241120180534746](./repoimg/image-20241120180534746.png)
+  
+  Mettre le readme de vincent 
+  
+  pour
   
   
   

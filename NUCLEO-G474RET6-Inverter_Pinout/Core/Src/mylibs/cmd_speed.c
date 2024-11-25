@@ -12,8 +12,8 @@
 #define RAMP_DELAY 10   // Temps en millisecondes entre chaque incrément
 #define RAMP_STEP 5     // Valeur d'incrément du rapport cyclique à chaque étape
 
-
-
+extern ADC_HandleTypeDef hadc1;
+//extern adcBuffer;
 void start_PWM (TIM_HandleTypeDef htim,uint32_t channel)
 {
 
@@ -35,12 +35,47 @@ void start_PWM (TIM_HandleTypeDef htim,uint32_t channel)
 void stop_PWM(TIM_HandleTypeDef htim,uint32_t channel)
 
 {
+	HAL_TIM_PWM_Stop(&htim, channel);
 
 	HAL_TIMEx_PWMN_Stop(&htim, channel);
-	HAL_TIMEx_PWMN_Stop(&htim, channel);
+
 
 
 }
+
+
+/*float calc_I(uint32_t adc_buf,int adc_res)//calculer la valeur du courant à partir de la mesure de l'adc
+{
+	(int) adc_buf=(adc_buf)/(adc_res);
+
+
+	 * u=3,3*mes_adc/4096
+	 *
+	 * u
+	 *
+	int value_u = (3.3*u)/4096;
+	float Imes = (value_u -((1,65))/(0,05));
+	return Imes;
+
+
+
+
+	HAL_ADC_Start(&hadc1);
+	HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
+	int value = HAL_ADC_GetValue(&hadc1);
+	float Imes = (value-((1,65))/(0,05));
+	int uartTxStringLength = snprintf((char *)uartTxBuffer, UART_TX_BUFFER_SIZE, "Valeur adc lue: %4d \r\n", value);
+	HAL_UART_Transmit(&huart2, uartTxBuffer, uartTxStringLength, HAL_MAX_DELAY);
+	uartTxStringLength = snprintf((char *)uartTxBuffer, UART_TX_BUFFER_SIZE, "ValeurImes post calc: %4d \r\n", Imes);
+	HAL_UART_Transmit(&huart2, uartTxBuffer, uartTxStringLength, HAL_MAX_DELAY);
+
+
+
+}*/
+
+
+
+
 
 /*
 
@@ -76,5 +111,5 @@ void speed_PWM(TIM_HandleTypeDef *htim, uint32_t channel, uint32_t target_speed)
         }
     }
 }
-*/
+ */
 

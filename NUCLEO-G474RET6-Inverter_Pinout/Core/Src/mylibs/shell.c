@@ -31,7 +31,7 @@ uint8_t uartRxBuffer[UART_RX_BUFFER_SIZE];
 uint8_t uartTxBuffer[UART_TX_BUFFER_SIZE];
 
 //extern TIM_HandleTypeDef htim1;
-
+uint16_t adcBuffer[BUFFER_SIZE]; // Buffer pour stocker les données ADC
 char	 	cmdBuffer[CMD_BUFFER_SIZE];
 int 		idx_cmd;
 char* 		argv[MAX_ARGS];
@@ -169,15 +169,42 @@ void Shell_Loop(void){
 		}
 		else if( strcmp(argv[0], "start") == 0){
 			start_PWM (htim1,TIM_CHANNEL_1);
+			commandRecognized = 1;
 
 
 		}
 		else if(strcmp(argv[0], "stop") == 0 ){
 			stop_PWM (htim1,TIM_CHANNEL_1);
 			stop_PWM (htim1,TIM_CHANNEL_2);
+			commandRecognized = 1;
 
 		}
+		else if(strcmp(argv[0], "current") == 0) {
 
+			//uint8_t BUFFER_SIZE=5;
+			//uint16_t adcBuff[BUFFER_SIZE];
+			//HAL_ADC_Start_DMA(&hadc1,adcBuff,BUFFER_SIZE);
+
+			//HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
+			//uint16_t adcBuff;
+			//adcBuff=HAL_ADC_GetValue(&hadc1);
+
+			float sentivity=0.05;
+			float adc_val_max=4096.0;
+			float  adc_vcc =3.3;
+			int offset =0;
+
+			float u_adc= adc_vcc * ( (int) (adcBuffer[0]) - offset )/ adc_val_max;
+			float Imes=(u_adc-1.65)/sentivity;
+
+
+			int uartTxStringLength = snprintf((char *)uartTxBuffer, UART_TX_BUFFER_SIZE, "Valeur : %d \r\n", adcBuffer[0]);
+			HAL_UART_Transmit(&huart2, uartTxBuffer, uartTxStringLength, HAL_MAX_DELAY);
+
+			uartTxStringLength = snprintf((char *)uartTxBuffer, UART_TX_BUFFER_SIZE, "ValeurImes : %.2f \r\n", Imes);
+			HAL_UART_Transmit(&huart2, uartTxBuffer, uartTxStringLength, HAL_MAX_DELAY);
+
+		}
 
 		else if(strcmp(argv[0], "speed") == 0) {
 			if(argc > 1) {
@@ -190,18 +217,19 @@ void Shell_Loop(void){
 				} else {
 					HAL_UART_Transmit(&huart2, (uint8_t *)"Invalid speed value\r\n", strlen("Invalid speed value\r\n"), HAL_MAX_DELAY);
 				}
-			} else {
+			}
+			else {
 				HAL_UART_Transmit(&huart2, (uint8_t *)"Please provide a speed value\r\n", strlen("Please provide a speed value\r\n"), HAL_MAX_DELAY);
 			}
 
-			HAL_ADC_Start(&hadc1);
+			/*HAL_ADC_Start(&hadc1);
 			HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
 			int value = HAL_ADC_GetValue(&hadc1);
 			float Imes = (value-((1,65))/(0,05));
 			int uartTxStringLength = snprintf((char *)uartTxBuffer, UART_TX_BUFFER_SIZE, "Valeur : %4d \r\n", value);
 			HAL_UART_Transmit(&huart2, uartTxBuffer, uartTxStringLength, HAL_MAX_DELAY);
 			uartTxStringLength = snprintf((char *)uartTxBuffer, UART_TX_BUFFER_SIZE, "ValeurImes : %4d \r\n", Imes);
-			HAL_UART_Transmit(&huart2, uartTxBuffer, uartTxStringLength, HAL_MAX_DELAY);
+			HAL_UART_Transmit(&huart2, uartTxBuffer, uartTxStringLength, HAL_MAX_DELAY);*/
 		}
 
 		// Si aucune commande n'est reconnue, envoyer "Command not found"

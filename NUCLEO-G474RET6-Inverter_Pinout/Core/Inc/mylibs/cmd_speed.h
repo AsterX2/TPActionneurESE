@@ -14,6 +14,7 @@
 
 void start_PWM(TIM_HandleTypeDef htim,uint32_t);
 void stop_PWM(TIM_HandleTypeDef,uint32_t);
+float calc_I(int,int );
 
 
 
