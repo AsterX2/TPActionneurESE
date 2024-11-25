@@ -71,8 +71,30 @@
 
   <img src="./image-20241107183303442.png" alt="image-20241107183303442" style="zoom: 50%;" />
 
-  ## 6.2 Commande de Vitesse via UART
+  Implémentation des temps morts de 100 ns estimé à l'aide du fall time et rise time plus leurs temps annexes dans la doc des transistors:
 
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  ## 6.2 Commande de Vitesse via UART
+  
   **Commande implémentée :**
   - **Format** : `speed XXXX` pour ajuster la vitesse du moteur.
   
@@ -81,8 +103,6 @@
   - Configuration de l’UART pour communication série avec terminal.
   - Détection et traitement de la commande `speed` via putty.
   - Application de la vitesse demandée par ajustement du rapport cyclique PWM.
-  
-  
   
   Après avoir lu le token "XXXX" de speed XXXX, on vérifie la conformité avec l'intervalle de valeurs extremum du cdc plus une marge de sécurité.
   
@@ -94,10 +114,6 @@
   
   - La commande de vitesse fonctionne, avec validation des valeurs limites (0 à 2174).
   
-  
-  
-  
-  
   ---
   
   ## 6.3 Premiers Tests de Contrôle du Moteur
@@ -108,12 +124,9 @@
   
   **Observations :**
   - Comme attendu les phases U et V se compensent à 50% du fait du mode center alined.
-  - Démarrage progressif du moteur sans à-coups grâce à la rampe de montée.
   - Courants d'appel limités, améliorant la sécurité des transistors.
   
   **Vue de oscilloscope à un rapport cyclique de 40% et 60% :**
-  
-  
   
   
   
@@ -121,13 +134,7 @@
   
   ![tek00001](./repoimg/tek00001.png)
   
-  
-  
-  
-  
   ## 
-  
-  
   
   ### 7.2. Mesure du courant
   
@@ -137,8 +144,6 @@
   
     Nous devons mesurer U_Imes et V_Imes. La mesure de courant est effectué par GO 10-SME/SP3 puis est transmise aux pins PA1 et PB1 de la nucleo.
   
-    
-  
   - Définir les fonctions de transfert des capteurs de mesure de courant (lecture datasheet),
   
   On considère le gain et l'offset du capteur, sensitivity à 50 mV/A et 1,65V pour la reference de tension
@@ -147,39 +152,25 @@
   
   Soit, 
   
-  ​		Vout= 1,65 + 0.05 * Imes
+  ​									Vout= 1,65 + 0.05 * Imes
   
   Nous allons maintenant pouvoir configurer l'ADC en fonction de ceci.
   
-  
-  
   - Déterminer les pin du stm32 utilisés pour faire ces mesures de courant,
   
-  PA1 et PB1
+  PA1 et PB1, d'aprés le shematic et la doc.
+  
+  - Etablir une première mesure de courant avec les ADC en Pooling. Faites des  tests à vitesse nulle, non nulle, et en charge (rajouter un couple resistif en consommant du courant sur la machine synchrone couplée à la  MCC).
   
   
-  
-  - Etablir une première mesure de courant avec les ADC en Pooling. Faites des  tests à vitesse nulle, non nulle, et en charge (rajouter un couple  resistif en consommant du courant sur la machine synchrone couplée à la  MCC).
-  
-  
-  
-  
-  
-  
-  
-  ---
   
   ![image-20241120173111108](./repoimg/image-20241120173111108.png)
   
   
   
-  
-  
   ![image-20241120180534746](./repoimg/image-20241120180534746.png)
   
-  Mettre le readme de vincent 
   
-  pour
   
   
   
@@ -191,30 +182,74 @@
   
   #### **Fonction de Transfert du Capteur :**
   
-  - **Nombre d'impulsions par tour (N) :** Indique le nombre d'impulsions générées pour une rotation complète.
-  - **Fréquence des impulsions (f) :** Mesurée en Hertz (Hz).
-  - **Vitesse de rotation (ω) :** En tours par minute (RPM) ou radians par seconde (rad/s).
+  - **Nombre d'impulsions par tour (N) :** Indique le nombre d'impulsions générées pour une rotation complète
+  - **Fréquence des impulsions (f) :**Hz
+  - **Vitesse de rotation (ω) :** En tours par minute (RPM)
   
   **Formule :**
   
   ![image-20241125152046559](./repoimg/image-20241125152046559.png)
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  ## Conclusion
-  
-  La configuration des PWM et de l'interface UART a permis de contrôler efficacement la vitesse du moteur en boucle ouverte. Les tests confirment le bon fonctionnement du système, avec un démarrage progressif permettant d’éviter les à-coups et les surintensités.
-  
-  
+
+
+
+## 8. TP n°3 Asservissement
+
+Nous n'avons pas pu implémenter cette partie mais nous expliquons ici les étapes nécessaires d'un point de vue théorique.
+
+## Asservissement en Vitesse :
+
+L'asservissement en vitesse consiste à contrôler la vitesse du moteur de manière à ce qu'elle suive une consigne donnée, malgré les perturbations externes (charges, variations de tension, ...). Pour cela, nous avons besoin d'une boucle de rétroaction où la vitesse réelle est mesurée et comparée à la vitesse souhaitée.
+
+### Étapes :
+
+1. **Mesure de la Vitesse**:
+
+   - Utiliser le codeur du moteur pour obtenir la vitesse réelle.
+   - Convertir les impulsions du codeur en une valeur de vitesse (rad/s).
+
+2. **Calcul de l'Erreur**:
+
+   - Calculer l'erreur de vitesse: 
+
+     ​		Erreur=Consigne de vitesse−Vitesse mesurée
+
+3. **Régulateur PI**:
+
+   - Implémenter un régulateur proportionnel-intégral (PI) pour corriger l'erreur.
+
+4. **Application de la Commande**:
+
+   - Ajuster le rapport cyclique de la PWM en fonction de la sortie du régulateur.
+   - Les limites sont fixées dans le codes à 10% et 90% du rapport cyclique par sécurité
+
+5. **Boucle de Contrôle**:
+
+   - On doit exécuter ces calculs à une fréquence régulière pour que l'asservissement soit efficace
+
+     
+
+## Asservissement en Courant
+
+- **Objectif**: Contrôler le courant consommé par le moteur pour protéger le système et améliorer la performance.
+
+### Étapes Clés:
+
+1. **Mesure du Courant**:
+   - Acquérir ces mesures via l'ADC du microcontrôleur.
+2. **Calcul de l'Erreur de Courant**:
+   - Calculer l'erreur de courant:
+     Erreur de courant=Consigne de courant−Courant mesure
+3. **Régulateur de Courant**:
+   - Implémenter un régulateur PI pour minimiser l'erreur de courant.
+   - Ajuster suffisamment rapidement la commande pour répondre aux variations de charge.
+4. **Boucle Rapide**:
+   - Exécuter cette boucle à une fréquence plus élevée que celle de la vitesse.
+
+## Intégration finale des deux asservissements
+
+- Structure en Cascade:
+  - **Boucle externe**: Asservissement en vitesse.
+  - **Boucle interne**: Asservissement en courant.
+- Avantages:
+  - Réponse rapide aux perturbations.
+  - Meilleure stabilité et précision du système. Nous aurions pu ensuite les mesurée depuis notre code.
