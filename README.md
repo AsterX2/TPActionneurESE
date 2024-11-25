@@ -38,27 +38,25 @@
   
   
   
-  
-  
-  
-  
   **Paramètres configurés :**
   
   - **Fréquence** : 20 kHz
   - **Résolution** : 10 bits
   - **Temps mort** : 200 ns, validé par la datasheet des transistors (Rise Time + Turn on delay Time=90 ns).
-
+  
   **Étapes effectuées :**
   - Configuration des pins pour les canaux PWM de TIM1.
   - Paramétrage des sorties complémentaires et des temps morts dans CubeIDE.
 
   
+  
+  f_PWM =fhorloge_timer/(PSC+1)×(ARR+1)
 
   f_PWM = 170,000,000 / (2 * 2 * (2124 + 1))
 
-  
-  
   f_PWM = 170,000,000 / 8500 = 20,000 Hz
+
+  
   
   **Résultats :**
   - Signaux PWM observés et validés à l'oscilloscope (voir illustration ci-dessous).
@@ -66,7 +64,7 @@
   **Illustrations :**
   
   <img src="./WhatsApp%20Image%202024-11-06%20at%2019.20.49-1730977352039-2.jpeg" alt="WhatsApp Image 2024-11-06 at 19.20.49" style="zoom: 25%;" />
-
+  
   ![image-20241107120818936](./image-20241107120818936.png)
 
   ---
@@ -98,9 +96,7 @@
   
   
   
-  **Illustrations :**
   
-  - ![Capture d'écran du terminal série avec commandes de vitesse](lien_image)
   
   ---
   
@@ -127,30 +123,9 @@
   
   
   
-  - ## 6.3 Premiers Tests de Contrôle du Moteur
   
-    **Conditions de test :**
   
-    - Rapports cycliques : 50 % et 70 %.
-    - Ajout d'une montée progressive pour limiter les courants d'appel et les à-coups.
-  
-    **Observations :**
-  
-    - Démarrage progressif du moteur sans à-coups grâce à la rampe de montée.
-    - Courants d'appel limités, améliorant la sécurité des transistors.
-  
-    **Illustrations :**
-  
-    - ![Graphique de montée progressive du rapport cyclique](./../../../Downloads/lien_image)
-    - ![Photo du moteur en fonctionnement avec indication de la vitesse](./../../../Downloads/lien_image)
-  
-    ---
-  
-    ## Conclusion
-  
-    La configuration des PWM et de l'interface UART a permis de contrôler efficacement la vitesse du moteur en boucle ouverte. Les tests confirment le bon fonctionnement du système, avec un démarrage progressif permettant d’éviter les à-coups et les surintensités.
-  
-    ejgzahf
+  ## 
   
   
   
@@ -168,7 +143,7 @@
   
   On considère le gain et l'offset du capteur, sensitivity à 50 mV/A et 1,65V pour la reference de tension
   
-  ![image-20241113165546988](./../../../../../home/vincent/Documents/ese_3a/reseaux_bus_de_terrain/bus_reseaux/docs_annexes/img/23_oct_18h59/image-20241113165546988.png)
+  ![image-20241113165546988](./repoimg/WhatsApp%20Image%202024-11-25%20at%2014.33.58.jpeg)
   
   Soit, 
   
@@ -205,6 +180,36 @@
   Mettre le readme de vincent 
   
   pour
+  
+  
+  
+  ### 7.3. Mesure de vitesse
+  
+  ### **Compréhension du Capteur de Vitesse**
+  
+  Le capteur de vitesse qui est un encodeur incrémental, génère des impulsions électriques proportionnelles à la rotation de l'arbre du moteur. 
+  
+  #### **Fonction de Transfert du Capteur :**
+  
+  - **Nombre d'impulsions par tour (N) :** Indique le nombre d'impulsions générées pour une rotation complète.
+  - **Fréquence des impulsions (f) :** Mesurée en Hertz (Hz).
+  - **Vitesse de rotation (ω) :** En tours par minute (RPM) ou radians par seconde (rad/s).
+  
+  **Formule :**
+  
+  ![image-20241125152046559](./repoimg/image-20241125152046559.png)
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
