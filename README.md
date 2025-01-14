@@ -1,8 +1,10 @@
-# TPActionneurESE
+# 2425_ESE3745_LAKHMECHE_JERJOUB
 
 # Compte Rendu : Contrôle de MCC avec la Carte Nucleo-G474R
 
+[TOC]
 
+Ce TP est constitué de 3 séances dont l'objectif est la commande et l'asservissement d'une MCC grâce à un prototype de l'ENSEA basé sur le STM32. 
 
 ## 6. TP n°1 - Commande MCC basique
 
@@ -73,7 +75,7 @@ Ce mode crée une forme d'onde triangulaire pour le compteur, par opposition au 
 
 - Formule de la fréquence PWM en mode center-aligned :
 
-  ​											f_PWM =fhorloge_timer/2*(PSC+1)×(ARR+1)
+  ​											f_PWM =fhorloge_timer/ (2*(PSC+1)×(ARR+1))
 
   - Le facteur 2 est dû au fait que le compteur monte et descend, donc le temps total est doublé par rapport au mode edge-aligned.
 
@@ -90,7 +92,7 @@ Le rapport cyclique est déterminé par la valeur du CCR par rapport à ARR.
 
 - **Formule du rapport cyclique** :
 
-  rapport cyclique=ARR/CCR
+  rapport cyclique=CCR/ARR
 
 - **Interprétation** : Le rapport cyclique est le ratio entre la durée de conduction de l'interrupteur et la période de fonctionnement (T).
 
@@ -99,23 +101,9 @@ Le rapport cyclique est déterminé par la valeur du CCR par rapport à ARR.
 - Réduction des Harmoniques : Le mode center-aligned génère moins d'harmoniques de rang impair, ce qui réduit le bruit électromagnétique.
 - Symétrie du Signal : Les fronts montants et descendants sont centrés, ce qui est utile pour certaines applications nécessitant une symétrie parfaite.
 
-
-
-
-
 On implémente aussi des temps morts de 200 ns estimé à l'aide du fall time et rise time, plus, leurs temps annexes dans la doc des transistors:
 
 ![WhatsApp Image 2024-11-25 at 22.15.03](./repoimg/WhatsApp%20Image%202024-11-25%20at%2022.15.03.jpeg)
-
-
-
-
-
-
-
-
-
-
 
 ## 6.2 Commande de Vitesse via UART
 
@@ -163,11 +151,11 @@ On peut ensuite modifier le rapport cyclique de nos 4 canaux PWM via les fonctio
 
 ### 7.1. Commande de la vitesse
 
-On a implémenter des fonctions pour commander le moteur tels que, `start_PWM(TIM_HandleTypeDef htim,uint32_t channel)` et `stop_PWM(TIM_HandleTypeDef htim,uint32_t channel)` afin de démarrer la génération des PWM et arrêter le rapport cyclique. 
+On a implémenter des fonctions pour commander le moteur tels que, `start_PWM(TIM_HandleTypeDef htim,uint32_t channel)` et `stop_PWM(TIM_HandleTypeDef htim,uint32_t channel)` afin de **démarrer** la génération des PWM et **arrêter** le rapport cyclique. 
 
 
 
-Pour générer les PWM on utilise les fonctions `HAL_TIM_PWM_Start` et `HAL_TIMEx_PWMN_Start` . Pour la fixation des rapports cyliques à 50 %, voir les commentaires du code contenu dans le fichier `cmd_speed.c`. 
+Pour générer les PWM, on utilise les fonctions `HAL_TIM_PWM_Start` et `HAL_TIMEx_PWMN_Start` . Pour la fixation des rapports cyliques à 50 %, voir les commentaires du code contenu dans le fichier `cmd_speed.c`. 
 
 De même, nous avons codé la fonction `stop_PWM(TIM_HandleTypeDef htim,uint32_t channel)`  à l'aide `HAL_TIM_PWM_Stop()` 
 
@@ -195,7 +183,7 @@ Nous allons maintenant pouvoir configurer l'ADC en fonction de ceci.
 
 - Déterminer les pin du stm32 utilisés pour faire ces mesures de courant,
 
-PA1 et PB1, d'aprés le shematic et la doc.
+Les pins utilisés sont PA1 et PB1, d'aprés le shematic et la doc.
 
 - Établir une première mesure de courant avec les ADC en Pooling. Faites des tests à vitesse nulle, non nulle, et en charge (rajouter un couple résistif en consommant du courant sur la machine synchrone couplée à la MCC).
 
@@ -252,7 +240,7 @@ Dans NVIC TIM1, on coche Update interrupt.
 
 ![image-20241120180534746](./repoimg/image-20241120180534746.png)
 
-
+On observe la valeur du courant mesuré.
 
 
 
@@ -262,27 +250,31 @@ Dans NVIC TIM1, on coche Update interrupt.
 
 Le capteur de vitesse qui est un encodeur incrémental, génère des impulsions électriques proportionnelles à la rotation de l'arbre du moteur. 
 
+Les pins de la stm32 utilisés pour effectuer la mesure de vitesse  sont les pins PA6 (pour la phase A) et PA4 (pour la phase B). 
+
 #### **Fonction de Transfert du Capteur :**
 
 - **Nombre d'impulsions par tour (N) :** Indique le nombre d'impulsions générées pour une rotation complète
-- **Fréquence des impulsions (f) :**Hz
+- Fréquence des impulsions (f) :Hz
 - **Vitesse de rotation (ω) :** En tours par minute (RPM)
 
 **Formule :**
 
 ![image-20241125152046559](./repoimg/image-20241125152046559.png)
 
-
+L'asservissement en vitesse doit être plus lent que l'asservissement en vitesse mais plus rapide que la constante de temps mécanique de la MCC.
 
 ## 8. TP n°3 Asservissement
 
-Nous n'avons pas pu implémenter cette partie mais nous expliquons ici les étapes nécessaires d'un point de vue théorique.
+Nous n'avons pas pu implémenter cette partie sans le matériel nécessaire pour travailler hors séance de TP mais nous expliquons ici les étapes nécessaires d'un point de vue théorique.
 
 ## Asservissement en Vitesse :
 
 L'asservissement en vitesse consiste à contrôler la vitesse du moteur de manière à ce qu'elle suive une consigne donnée, malgré les perturbations externes (charges, variations de tension, ...). Pour cela, nous avons besoin d'une boucle de rétroaction où la vitesse réelle est mesurée et comparée à la vitesse souhaitée.
 
-### Étapes :
+Les pins de la stm32 utilisés pour faire la mesure de vitesse sont PA6 et PA4.
+
+Étapes :
 
 1. **Mesure de la Vitesse**:
 
@@ -314,7 +306,7 @@ L'asservissement en vitesse consiste à contrôler la vitesse du moteur de mani�
 
 - **Objectif**: Contrôler le courant consommé par le moteur pour protéger le système et améliorer la performance.
 
-### Étapes Clés:
+Étapes Clés:
 
 1. **Mesure du Courant**:
    - Acquérir ces mesures via l'ADC du microcontrôleur.
@@ -362,3 +354,4 @@ Karim Jerjoub
 
 
 
+w
