@@ -82,9 +82,9 @@ On observe bien un temps mort de 200 ns
 
 - Signaux PWM observés et validés à l'oscilloscope
 
-![WhatsApp Image 2025-01-19 at 11.05.46](./assets/WhatsApp%20Image%202025-01-19%20at%2011.05.46.jpeg)
-
 ![WhatsApp Image 2025-01-19 at 11.05.55](./assets/WhatsApp%20Image%202025-01-19%20at%2011.05.55.jpeg)
+
+![WhatsApp Image 2025-01-19 at 11.05.46](./assets/WhatsApp%20Image%202025-01-19%20at%2011.05.46.jpeg)
 
 Deux registres sont utilisés pour configurer le signal PWM en mode center-aligned :
 
