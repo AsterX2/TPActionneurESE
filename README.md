@@ -25,9 +25,10 @@ Une fois les PWM générées, on les affichent sur un oscilloscope à l'onde d'u
 
 
 
+![WhatsApp Image 2024-11-06 at 19 20 49-1730977352039-2](https://github.com/user-attachments/assets/bbd16b51-f86f-4f75-b1ce-417444c57191)
 
 
-<img src="./WhatsApp%20Image%202024-11-06%20at%2019.20.49-1730977352039-2.jpeg" alt="WhatsApp Image 2024-11-06 at 19.20.49" style="zoom: 25%;" />
+
 
 **Paramètres configurés :**
 
