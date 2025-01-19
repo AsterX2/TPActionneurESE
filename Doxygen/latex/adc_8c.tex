@@ -1,0 +1,87 @@
+\doxysection{Référence du fichier adc.\+c}
+\hypertarget{adc_8c}{}\label{adc_8c}\index{adc.c@{adc.c}}
+
+
+This file provides code for the configuration of the ADC instances.  
+
+
+{\ttfamily \#include "{}adc.\+h"{}}\newline
+\doxysubsubsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{adc_8c_acccd58aa70215a6b184ad242312ffd0c}{MX\+\_\+\+ADC1\+\_\+\+Init}} (void)
+\item 
+void \mbox{\hyperlink{adc_8c_a101e2e3433dfe72bbbd0ae3a84489263}{MX\+\_\+\+ADC2\+\_\+\+Init}} (void)
+\item 
+void \mbox{\hyperlink{adc_8c_ac3139540667c403c5dfd37a99c610b1c}{HAL\+\_\+\+ADC\+\_\+\+Msp\+Init}} (ADC\+\_\+\+Handle\+Type\+Def \texorpdfstring{$\ast$}{*}adc\+Handle)
+\item 
+void \mbox{\hyperlink{adc_8c_a3f61f2c2af0f122f81a87af8ad7b4360}{HAL\+\_\+\+ADC\+\_\+\+Msp\+De\+Init}} (ADC\+\_\+\+Handle\+Type\+Def \texorpdfstring{$\ast$}{*}adc\+Handle)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{adc_8c_a22b804736f5648d52f639b2647d4ed13}\label{adc_8c_a22b804736f5648d52f639b2647d4ed13} 
+ADC\+\_\+\+Handle\+Type\+Def {\bfseries hadc1}
+\begin{DoxyCompactList}\small\item\em Handle de l\textquotesingle{}ADC utilisé pour la mesure de courant. \end{DoxyCompactList}\item 
+\Hypertarget{adc_8c_acd9221f1aa19aebfe0b744947f2daf49}\label{adc_8c_acd9221f1aa19aebfe0b744947f2daf49} 
+ADC\+\_\+\+Handle\+Type\+Def {\bfseries hadc2}
+\item 
+\Hypertarget{adc_8c_a1c126854bb1813d31ab4776b21dcc51f}\label{adc_8c_a1c126854bb1813d31ab4776b21dcc51f} 
+DMA\+\_\+\+Handle\+Type\+Def {\bfseries hdma\+\_\+adc1}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+This file provides code for the configuration of the ADC instances. 
+
+\begin{DoxyAttention}{Attention}
+
+\end{DoxyAttention}
+Copyright (c) 2023 STMicroelectronics. All rights reserved.
+
+This software is licensed under terms that can be found in the LICENSE file in the root directory of this software component. If no LICENSE file comes with this software, it is provided AS-\/\+IS. 
+
+\doxysubsection{Documentation des fonctions}
+\Hypertarget{adc_8c_a3f61f2c2af0f122f81a87af8ad7b4360}\index{adc.c@{adc.c}!HAL\_ADC\_MspDeInit@{HAL\_ADC\_MspDeInit}}
+\index{HAL\_ADC\_MspDeInit@{HAL\_ADC\_MspDeInit}!adc.c@{adc.c}}
+\doxysubsubsection{\texorpdfstring{HAL\_ADC\_MspDeInit()}{HAL\_ADC\_MspDeInit()}}
+{\footnotesize\ttfamily \label{adc_8c_a3f61f2c2af0f122f81a87af8ad7b4360} 
+void HAL\+\_\+\+ADC\+\_\+\+Msp\+De\+Init (\begin{DoxyParamCaption}\item[{ADC\+\_\+\+Handle\+Type\+Def \texorpdfstring{$\ast$}{*}}]{adc\+Handle}{}\end{DoxyParamCaption})}
+
+ADC1 GPIO Configuration PC2 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} ADC1\+\_\+\+IN8 PA1 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} ADC1\+\_\+\+IN2 PB0 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} ADC1\+\_\+\+IN15 PB1 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} ADC1\+\_\+\+IN12
+
+Uncomment the line below to disable the "{}\+ADC1\+\_\+2\+\_\+\+IRQn"{} interrupt Be aware, disabling shared interrupt may affect other IPs
+
+ADC2 GPIO Configuration PC0 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} ADC2\+\_\+\+IN6 PC1 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} ADC2\+\_\+\+IN7 PC3 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} ADC2\+\_\+\+IN9 PA0 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} ADC2\+\_\+\+IN1
+
+Uncomment the line below to disable the "{}\+ADC1\+\_\+2\+\_\+\+IRQn"{} interrupt Be aware, disabling shared interrupt may affect other IPs\Hypertarget{adc_8c_ac3139540667c403c5dfd37a99c610b1c}\index{adc.c@{adc.c}!HAL\_ADC\_MspInit@{HAL\_ADC\_MspInit}}
+\index{HAL\_ADC\_MspInit@{HAL\_ADC\_MspInit}!adc.c@{adc.c}}
+\doxysubsubsection{\texorpdfstring{HAL\_ADC\_MspInit()}{HAL\_ADC\_MspInit()}}
+{\footnotesize\ttfamily \label{adc_8c_ac3139540667c403c5dfd37a99c610b1c} 
+void HAL\+\_\+\+ADC\+\_\+\+Msp\+Init (\begin{DoxyParamCaption}\item[{ADC\+\_\+\+Handle\+Type\+Def \texorpdfstring{$\ast$}{*}}]{adc\+Handle}{}\end{DoxyParamCaption})}
+
+Initializes the peripherals clocks
+
+ADC1 GPIO Configuration PC2 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} ADC1\+\_\+\+IN8 PA1 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} ADC1\+\_\+\+IN2 PB0 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} ADC1\+\_\+\+IN15 PB1 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} ADC1\+\_\+\+IN12
+
+Initializes the peripherals clocks
+
+ADC2 GPIO Configuration PC0 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} ADC2\+\_\+\+IN6 PC1 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} ADC2\+\_\+\+IN7 PC3 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} ADC2\+\_\+\+IN9 PA0 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} ADC2\+\_\+\+IN1\Hypertarget{adc_8c_acccd58aa70215a6b184ad242312ffd0c}\index{adc.c@{adc.c}!MX\_ADC1\_Init@{MX\_ADC1\_Init}}
+\index{MX\_ADC1\_Init@{MX\_ADC1\_Init}!adc.c@{adc.c}}
+\doxysubsubsection{\texorpdfstring{MX\_ADC1\_Init()}{MX\_ADC1\_Init()}}
+{\footnotesize\ttfamily \label{adc_8c_acccd58aa70215a6b184ad242312ffd0c} 
+void MX\+\_\+\+ADC1\+\_\+\+Init (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+Common config
+
+Configure the ADC multi-\/mode
+
+Configure Regular Channel\Hypertarget{adc_8c_a101e2e3433dfe72bbbd0ae3a84489263}\index{adc.c@{adc.c}!MX\_ADC2\_Init@{MX\_ADC2\_Init}}
+\index{MX\_ADC2\_Init@{MX\_ADC2\_Init}!adc.c@{adc.c}}
+\doxysubsubsection{\texorpdfstring{MX\_ADC2\_Init()}{MX\_ADC2\_Init()}}
+{\footnotesize\ttfamily \label{adc_8c_a101e2e3433dfe72bbbd0ae3a84489263} 
+void MX\+\_\+\+ADC2\+\_\+\+Init (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+Common config
+
+Configure Regular Channel

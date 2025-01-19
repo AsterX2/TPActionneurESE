@@ -1,0 +1,70 @@
+\doxysection{Référence du fichier tim.\+c}
+\hypertarget{tim_8c}{}\label{tim_8c}\index{tim.c@{tim.c}}
+
+
+This file provides code for the configuration of the TIM instances.  
+
+
+{\ttfamily \#include "{}tim.\+h"{}}\newline
+\doxysubsubsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{tim_8c_ad1f9d42690163f73f73e5b820c81ca14}\label{tim_8c_ad1f9d42690163f73f73e5b820c81ca14} 
+void {\bfseries MX\+\_\+\+TIM1\+\_\+\+Init} (void)
+\item 
+\Hypertarget{tim_8c_a7912f2916786a2c33cb6fb8259ade58c}\label{tim_8c_a7912f2916786a2c33cb6fb8259ade58c} 
+void {\bfseries MX\+\_\+\+TIM3\+\_\+\+Init} (void)
+\item 
+\Hypertarget{tim_8c_acc04a9bb2813334b6e3585d1f16e5199}\label{tim_8c_acc04a9bb2813334b6e3585d1f16e5199} 
+void {\bfseries HAL\+\_\+\+TIM\+\_\+\+PWM\+\_\+\+Msp\+Init} (TIM\+\_\+\+Handle\+Type\+Def \texorpdfstring{$\ast$}{*}tim\+\_\+pwm\+Handle)
+\item 
+void \mbox{\hyperlink{tim_8c_a6af1ce8c30614bff6202b8320cd6c9e0}{HAL\+\_\+\+TIMEx\+\_\+\+Hall\+Sensor\+\_\+\+Msp\+Init}} (TIM\+\_\+\+Handle\+Type\+Def \texorpdfstring{$\ast$}{*}timex\+\_\+hallsensor\+Handle)
+\item 
+void \mbox{\hyperlink{tim_8c_a708f19bbc41b292fccf38f2d9796c46a}{HAL\+\_\+\+TIM\+\_\+\+Msp\+Post\+Init}} (TIM\+\_\+\+Handle\+Type\+Def \texorpdfstring{$\ast$}{*}tim\+Handle)
+\item 
+\Hypertarget{tim_8c_ab862d9bf6ab68a9201719c992c3f4b43}\label{tim_8c_ab862d9bf6ab68a9201719c992c3f4b43} 
+void {\bfseries HAL\+\_\+\+TIM\+\_\+\+PWM\+\_\+\+Msp\+De\+Init} (TIM\+\_\+\+Handle\+Type\+Def \texorpdfstring{$\ast$}{*}tim\+\_\+pwm\+Handle)
+\item 
+void \mbox{\hyperlink{tim_8c_ae662978799bfda775e08d9baf88252f4}{HAL\+\_\+\+TIMEx\+\_\+\+Hall\+Sensor\+\_\+\+Msp\+De\+Init}} (TIM\+\_\+\+Handle\+Type\+Def \texorpdfstring{$\ast$}{*}timex\+\_\+hallsensor\+Handle)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{tim_8c_a25fc663547539bc49fecc0011bd76ab5}\label{tim_8c_a25fc663547539bc49fecc0011bd76ab5} 
+TIM\+\_\+\+Handle\+Type\+Def {\bfseries htim1}
+\item 
+\Hypertarget{tim_8c_aac3d2c59ee0e3bbae1b99529a154eb62}\label{tim_8c_aac3d2c59ee0e3bbae1b99529a154eb62} 
+TIM\+\_\+\+Handle\+Type\+Def {\bfseries htim3}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+This file provides code for the configuration of the TIM instances. 
+
+\begin{DoxyAttention}{Attention}
+
+\end{DoxyAttention}
+Copyright (c) 2023 STMicroelectronics. All rights reserved.
+
+This software is licensed under terms that can be found in the LICENSE file in the root directory of this software component. If no LICENSE file comes with this software, it is provided AS-\/\+IS. 
+
+\doxysubsection{Documentation des fonctions}
+\Hypertarget{tim_8c_a708f19bbc41b292fccf38f2d9796c46a}\index{tim.c@{tim.c}!HAL\_TIM\_MspPostInit@{HAL\_TIM\_MspPostInit}}
+\index{HAL\_TIM\_MspPostInit@{HAL\_TIM\_MspPostInit}!tim.c@{tim.c}}
+\doxysubsubsection{\texorpdfstring{HAL\_TIM\_MspPostInit()}{HAL\_TIM\_MspPostInit()}}
+{\footnotesize\ttfamily \label{tim_8c_a708f19bbc41b292fccf38f2d9796c46a} 
+void HAL\+\_\+\+TIM\+\_\+\+Msp\+Post\+Init (\begin{DoxyParamCaption}\item[{TIM\+\_\+\+Handle\+Type\+Def \texorpdfstring{$\ast$}{*}}]{tim\+Handle}{}\end{DoxyParamCaption})}
+
+TIM1 GPIO Configuration PB13 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} TIM1\+\_\+\+CH1N PB14 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} TIM1\+\_\+\+CH2N PB15 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} TIM1\+\_\+\+CH3N PA8 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} TIM1\+\_\+\+CH1 PA9 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} TIM1\+\_\+\+CH2 PA10 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} TIM1\+\_\+\+CH3\Hypertarget{tim_8c_ae662978799bfda775e08d9baf88252f4}\index{tim.c@{tim.c}!HAL\_TIMEx\_HallSensor\_MspDeInit@{HAL\_TIMEx\_HallSensor\_MspDeInit}}
+\index{HAL\_TIMEx\_HallSensor\_MspDeInit@{HAL\_TIMEx\_HallSensor\_MspDeInit}!tim.c@{tim.c}}
+\doxysubsubsection{\texorpdfstring{HAL\_TIMEx\_HallSensor\_MspDeInit()}{HAL\_TIMEx\_HallSensor\_MspDeInit()}}
+{\footnotesize\ttfamily \label{tim_8c_ae662978799bfda775e08d9baf88252f4} 
+void HAL\+\_\+\+TIMEx\+\_\+\+Hall\+Sensor\+\_\+\+Msp\+De\+Init (\begin{DoxyParamCaption}\item[{TIM\+\_\+\+Handle\+Type\+Def \texorpdfstring{$\ast$}{*}}]{timex\+\_\+hallsensor\+Handle}{}\end{DoxyParamCaption})}
+
+TIM3 GPIO Configuration PA4 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} TIM3\+\_\+\+CH2 PA6 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} TIM3\+\_\+\+CH1 PC8 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} TIM3\+\_\+\+CH3\Hypertarget{tim_8c_a6af1ce8c30614bff6202b8320cd6c9e0}\index{tim.c@{tim.c}!HAL\_TIMEx\_HallSensor\_MspInit@{HAL\_TIMEx\_HallSensor\_MspInit}}
+\index{HAL\_TIMEx\_HallSensor\_MspInit@{HAL\_TIMEx\_HallSensor\_MspInit}!tim.c@{tim.c}}
+\doxysubsubsection{\texorpdfstring{HAL\_TIMEx\_HallSensor\_MspInit()}{HAL\_TIMEx\_HallSensor\_MspInit()}}
+{\footnotesize\ttfamily \label{tim_8c_a6af1ce8c30614bff6202b8320cd6c9e0} 
+void HAL\+\_\+\+TIMEx\+\_\+\+Hall\+Sensor\+\_\+\+Msp\+Init (\begin{DoxyParamCaption}\item[{TIM\+\_\+\+Handle\+Type\+Def \texorpdfstring{$\ast$}{*}}]{timex\+\_\+hallsensor\+Handle}{}\end{DoxyParamCaption})}
+
+TIM3 GPIO Configuration PA4 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} TIM3\+\_\+\+CH2 PA6 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} TIM3\+\_\+\+CH1 PC8 -\/-\/-\/-\/-\/-\/\texorpdfstring{$>$}{>} TIM3\+\_\+\+CH3

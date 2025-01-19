@@ -1,0 +1,68 @@
+\doxysection{Référence du fichier system\+\_\+stm32g4xx.\+c}
+\hypertarget{system__stm32g4xx_8c}{}\label{system__stm32g4xx_8c}\index{system\_stm32g4xx.c@{system\_stm32g4xx.c}}
+
+
+CMSIS Cortex-\/\+M4 Device Peripheral Access Layer System Source File.  
+
+
+{\ttfamily \#include "{}stm32g4xx.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{group___s_t_m32_g4xx___system___private___includes_gaeafcff4f57440c60e64812dddd13e7cb}{HSE\+\_\+\+VALUE}}~24000000U
+\item 
+\#define \mbox{\hyperlink{group___s_t_m32_g4xx___system___private___includes_gaaa8c76e274d0f6dd2cefb5d0b17fbc37}{HSI\+\_\+\+VALUE}}~16000000U
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{group___s_t_m32_g4xx___system___private___functions_ga93f514700ccf00d08dbdcff7f1224eb2}{System\+Init}} (void)
+\begin{DoxyCompactList}\small\item\em Setup the microcontroller system. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group___s_t_m32_g4xx___system___private___functions_gae0c36a9591fe6e9c45ecb21a794f0f0f}{System\+Core\+Clock\+Update}} (void)
+\begin{DoxyCompactList}\small\item\em Update System\+Core\+Clock variable according to Clock Register Values. The System\+Core\+Clock variable contains the core clock (HCLK), it can be used by the user application to setup the Sys\+Tick timer or configure other parameters. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+uint32\+\_\+t {\bfseries System\+Core\+Clock} = \mbox{\hyperlink{group___s_t_m32_g4xx___system___private___includes_gaaa8c76e274d0f6dd2cefb5d0b17fbc37}{HSI\+\_\+\+VALUE}}
+\item 
+const uint8\+\_\+t {\bfseries AHBPresc\+Table} \mbox{[}16\mbox{]} = \{0U, 0U, 0U, 0U, 0U, 0U, 0U, 0U, 1U, 2U, 3U, 4U, 6U, 7U, 8U, 9U\}
+\item 
+const uint8\+\_\+t {\bfseries APBPresc\+Table} \mbox{[}8\mbox{]} = \{0U, 0U, 0U, 0U, 1U, 2U, 3U, 4U\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+CMSIS Cortex-\/\+M4 Device Peripheral Access Layer System Source File. 
+
+\begin{DoxyAuthor}{Auteur}
+MCD Application Team 
+\end{DoxyAuthor}
+This file provides two functions and one global variable to be called from user application\+:
+\begin{DoxyItemize}
+\item \doxylink{group___s_t_m32_g4xx___system___private___functions_ga93f514700ccf00d08dbdcff7f1224eb2}{System\+Init()}\+: This function is called at startup just after reset and before branch to main program. This call is made inside the "{}startup\+\_\+stm32g4xx.\+s"{} file.
+\item System\+Core\+Clock variable\+: Contains the core clock (HCLK), it can be used by the user application to setup the Sys\+Tick timer or configure other parameters.
+\item \doxylink{group___s_t_m32_g4xx___system___private___functions_gae0c36a9591fe6e9c45ecb21a794f0f0f}{System\+Core\+Clock\+Update()}\+: Updates the variable System\+Core\+Clock and must be called whenever the core clock is changed during program execution.
+\end{DoxyItemize}
+
+After each device reset the HSI (16 MHz) is used as system clock source. Then \doxylink{group___s_t_m32_g4xx___system___private___functions_ga93f514700ccf00d08dbdcff7f1224eb2}{System\+Init()} function is called, in "{}startup\+\_\+stm32g4xx.\+s"{} file, to configure the system clock before to branch to main program.\hypertarget{system__stm32g4xx_8c_autotoc_md0}{}\doxysubsection{\texorpdfstring{This file configures the system clock as follows\+:}{This file configures the system clock as follows\+:}}\label{system__stm32g4xx_8c_autotoc_md0}
+\DoxyHorRuler{0}
+ \hypertarget{system__stm32g4xx_8c_autotoc_md1}{}\doxysubsubsection{\texorpdfstring{System Clock source \texorpdfstring{$\vert$}{|} HSI}{System Clock source \texorpdfstring{$\vert$}{|} HSI}}\label{system__stm32g4xx_8c_autotoc_md1}
+\hypertarget{system__stm32g4xx_8c_autotoc_md2}{}\doxysubsubsection{\texorpdfstring{SYSCLK(\+Hz) \texorpdfstring{$\vert$}{|} 16000000}{SYSCLK(\+Hz) \texorpdfstring{$\vert$}{|} 16000000}}\label{system__stm32g4xx_8c_autotoc_md2}
+\hypertarget{system__stm32g4xx_8c_autotoc_md3}{}\doxysubsubsection{\texorpdfstring{HCLK(\+Hz) \texorpdfstring{$\vert$}{|} 16000000}{HCLK(\+Hz) \texorpdfstring{$\vert$}{|} 16000000}}\label{system__stm32g4xx_8c_autotoc_md3}
+\hypertarget{system__stm32g4xx_8c_autotoc_md4}{}\doxysubsubsection{\texorpdfstring{AHB Prescaler \texorpdfstring{$\vert$}{|} 1}{AHB Prescaler \texorpdfstring{$\vert$}{|} 1}}\label{system__stm32g4xx_8c_autotoc_md4}
+\hypertarget{system__stm32g4xx_8c_autotoc_md5}{}\doxysubsubsection{\texorpdfstring{APB1 Prescaler \texorpdfstring{$\vert$}{|} 1}{APB1 Prescaler \texorpdfstring{$\vert$}{|} 1}}\label{system__stm32g4xx_8c_autotoc_md5}
+\hypertarget{system__stm32g4xx_8c_autotoc_md6}{}\doxysubsubsection{\texorpdfstring{APB2 Prescaler \texorpdfstring{$\vert$}{|} 1}{APB2 Prescaler \texorpdfstring{$\vert$}{|} 1}}\label{system__stm32g4xx_8c_autotoc_md6}
+\hypertarget{system__stm32g4xx_8c_autotoc_md7}{}\doxysubsubsection{\texorpdfstring{PLL\+\_\+M \texorpdfstring{$\vert$}{|} 1}{PLL\+\_\+M \texorpdfstring{$\vert$}{|} 1}}\label{system__stm32g4xx_8c_autotoc_md7}
+\hypertarget{system__stm32g4xx_8c_autotoc_md8}{}\doxysubsubsection{\texorpdfstring{PLL\+\_\+N \texorpdfstring{$\vert$}{|} 16}{PLL\+\_\+N \texorpdfstring{$\vert$}{|} 16}}\label{system__stm32g4xx_8c_autotoc_md8}
+\hypertarget{system__stm32g4xx_8c_autotoc_md9}{}\doxysubsubsection{\texorpdfstring{PLL\+\_\+P \texorpdfstring{$\vert$}{|} 7}{PLL\+\_\+P \texorpdfstring{$\vert$}{|} 7}}\label{system__stm32g4xx_8c_autotoc_md9}
+\hypertarget{system__stm32g4xx_8c_autotoc_md10}{}\doxysubsubsection{\texorpdfstring{PLL\+\_\+Q \texorpdfstring{$\vert$}{|} 2}{PLL\+\_\+Q \texorpdfstring{$\vert$}{|} 2}}\label{system__stm32g4xx_8c_autotoc_md10}
+\hypertarget{system__stm32g4xx_8c_autotoc_md11}{}\doxysubsubsection{\texorpdfstring{PLL\+\_\+R \texorpdfstring{$\vert$}{|} 2}{PLL\+\_\+R \texorpdfstring{$\vert$}{|} 2}}\label{system__stm32g4xx_8c_autotoc_md11}
+\hypertarget{system__stm32g4xx_8c_autotoc_md12}{}\doxysubsubsection{\texorpdfstring{Require 48MHz for RNG \texorpdfstring{$\vert$}{|} Disabled}{Require 48MHz for RNG \texorpdfstring{$\vert$}{|} Disabled}}\label{system__stm32g4xx_8c_autotoc_md12}
+=============================================================================
+
+\begin{DoxyAttention}{Attention}
+
+\end{DoxyAttention}
+Copyright (c) 2019 STMicroelectronics. All rights reserved.
+
+This software is licensed under terms that can be found in the LICENSE file in the root directory of this software component. If no LICENSE file comes with this software, it is provided AS-\/\+IS. 

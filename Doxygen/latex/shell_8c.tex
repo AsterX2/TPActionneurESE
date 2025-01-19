@@ -1,0 +1,161 @@
+\doxysection{Référence du fichier mylibs/shell.c}
+\hypertarget{shell_8c}{}\label{shell_8c}\index{mylibs/shell.c@{mylibs/shell.c}}
+
+
+Implémentation d\textquotesingle{}un shell de commandes pour le microcontrôleur STM32\+G474\+RET6.  
+
+
+{\ttfamily \#include "{}usart.\+h"{}}\newline
+{\ttfamily \#include "{}mylibs/shell.\+h"{}}\newline
+{\ttfamily \#include "{}tim.\+h"{}}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include "{}mylibs/cmd\+\_\+speed.\+h"{}}\newline
+{\ttfamily \#include "{}adc.\+h"{}}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+\doxysubsubsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{shell_8c_a1e1a7212cd1e25d36ce85620f03f996e}{Shell\+\_\+\+Init}} (void)
+\begin{DoxyCompactList}\small\item\em Initialise le shell. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{shell_8c_a9f70d5542e7f7f470ff7cd7d482caeb7}{Shell\+\_\+\+Loop}} (void)
+\begin{DoxyCompactList}\small\item\em Boucle principale du shell. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{shell_8c_ae494a9643f29b87d6d81e5264e60e57b}{HAL\+\_\+\+UART\+\_\+\+Rx\+Cplt\+Callback}} (UART\+\_\+\+Handle\+Type\+Def \texorpdfstring{$\ast$}{*}huart)
+\begin{DoxyCompactList}\small\item\em Callback appelé lors de la réception d\textquotesingle{}un caractère UART. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{shell_8c_a8b893859891afe33d4bba72ba06fd381}\label{shell_8c_a8b893859891afe33d4bba72ba06fd381} 
+uint8\+\_\+t {\bfseries prompt} \mbox{[}$\,$\mbox{]} = "{}user@Nucleo-\/STM32\+G474\+RET6$>$$>$"{}
+\begin{DoxyCompactList}\small\item\em Prompt affiché avant chaque commande. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{shell_8c_a835573497a60b314a9bf5a6fcac9602a}{started}} \mbox{[}$\,$\mbox{]}
+\begin{DoxyCompactList}\small\item\em Message de bienvenue affiché au démarrage. \end{DoxyCompactList}\item 
+\Hypertarget{shell_8c_a98a2c452a5e7053154e9f49a4cad4e98}\label{shell_8c_a98a2c452a5e7053154e9f49a4cad4e98} 
+uint8\+\_\+t {\bfseries newline} \mbox{[}$\,$\mbox{]} = "{}\textbackslash{}r\textbackslash{}n"{}
+\begin{DoxyCompactList}\small\item\em Caractères de nouvelle ligne. \end{DoxyCompactList}\item 
+\Hypertarget{shell_8c_a73072efaa96faae50fbceb96dc409a43}\label{shell_8c_a73072efaa96faae50fbceb96dc409a43} 
+uint8\+\_\+t {\bfseries backspace} \mbox{[}$\,$\mbox{]} = "{}\textbackslash{}b \textbackslash{}b"{}
+\begin{DoxyCompactList}\small\item\em Caractères pour effacer le dernier caractère. \end{DoxyCompactList}\item 
+\Hypertarget{shell_8c_a25205e7c6d817620c1d9f7351a817a04}\label{shell_8c_a25205e7c6d817620c1d9f7351a817a04} 
+uint8\+\_\+t {\bfseries cmd\+Not\+Found} \mbox{[}$\,$\mbox{]} = "{}Command not found\textbackslash{}r\textbackslash{}n"{}
+\begin{DoxyCompactList}\small\item\em Message d\textquotesingle{}erreur pour une commande non reconnue. \end{DoxyCompactList}\item 
+\Hypertarget{shell_8c_a438d322744fd2053e4b031aea2ad1cbe}\label{shell_8c_a438d322744fd2053e4b031aea2ad1cbe} 
+uint8\+\_\+t {\bfseries brian} \mbox{[}$\,$\mbox{]} = "{}Brian is in the kitchen\textbackslash{}r\textbackslash{}n"{}
+\begin{DoxyCompactList}\small\item\em Message de réponse à la commande Whereis\+Brian? \end{DoxyCompactList}\item 
+\Hypertarget{shell_8c_a9f01ffb72325e6328a2239d6de7f4abc}\label{shell_8c_a9f01ffb72325e6328a2239d6de7f4abc} 
+uint8\+\_\+t {\bfseries uart\+Rx\+Received}
+\begin{DoxyCompactList}\small\item\em Flag indiquant la réception d\textquotesingle{}un caractère UART. \end{DoxyCompactList}\item 
+\Hypertarget{shell_8c_a2542ac6d4440b9e1c4a6435c55c79df3}\label{shell_8c_a2542ac6d4440b9e1c4a6435c55c79df3} 
+uint8\+\_\+t {\bfseries uart\+Rx\+Buffer} \mbox{[}UART\+\_\+\+RX\+\_\+\+BUFFER\+\_\+\+SIZE\mbox{]}
+\begin{DoxyCompactList}\small\item\em Buffer de réception UART. \end{DoxyCompactList}\item 
+\Hypertarget{shell_8c_a3f98e2db2fa0d8f0cfd87b887576207f}\label{shell_8c_a3f98e2db2fa0d8f0cfd87b887576207f} 
+uint8\+\_\+t {\bfseries uart\+Tx\+Buffer} \mbox{[}UART\+\_\+\+TX\+\_\+\+BUFFER\+\_\+\+SIZE\mbox{]}
+\begin{DoxyCompactList}\small\item\em Buffer de transmission UART. \end{DoxyCompactList}\item 
+\Hypertarget{shell_8c_abb947286457c16ddf75ec91c50ad7014}\label{shell_8c_abb947286457c16ddf75ec91c50ad7014} 
+uint16\+\_\+t {\bfseries adc\+Buffer} \mbox{[}BUFFER\+\_\+\+SIZE\mbox{]}
+\begin{DoxyCompactList}\small\item\em Buffer pour stocker les données ADC. \end{DoxyCompactList}\item 
+\Hypertarget{shell_8c_a755c320507955b333af8919b434c80dd}\label{shell_8c_a755c320507955b333af8919b434c80dd} 
+char {\bfseries cmd\+Buffer} \mbox{[}CMD\+\_\+\+BUFFER\+\_\+\+SIZE\mbox{]}
+\begin{DoxyCompactList}\small\item\em Buffer stockant la commande en cours de saisie. \end{DoxyCompactList}\item 
+\Hypertarget{shell_8c_a53cf6ebd0848970afbf70c176bec9314}\label{shell_8c_a53cf6ebd0848970afbf70c176bec9314} 
+int {\bfseries idx\+\_\+cmd}
+\begin{DoxyCompactList}\small\item\em Index courant dans le buffer de commande. \end{DoxyCompactList}\item 
+\Hypertarget{shell_8c_a097621c7310da407a3cc4a6ae4568c56}\label{shell_8c_a097621c7310da407a3cc4a6ae4568c56} 
+char \texorpdfstring{$\ast$}{*} {\bfseries argv} \mbox{[}MAX\+\_\+\+ARGS\mbox{]}
+\begin{DoxyCompactList}\small\item\em Tableau des arguments de la commande. \end{DoxyCompactList}\item 
+\Hypertarget{shell_8c_ad1447518f4372828b8435ae82e48499e}\label{shell_8c_ad1447518f4372828b8435ae82e48499e} 
+int {\bfseries argc} = 0
+\begin{DoxyCompactList}\small\item\em Nombre d\textquotesingle{}arguments de la commande. \end{DoxyCompactList}\item 
+\Hypertarget{shell_8c_a1d71425d9df28667d528833a4db10432}\label{shell_8c_a1d71425d9df28667d528833a4db10432} 
+char \texorpdfstring{$\ast$}{*} {\bfseries token}
+\begin{DoxyCompactList}\small\item\em Pointeur utilisé pour le parsing des arguments. \end{DoxyCompactList}\item 
+\Hypertarget{shell_8c_a83a0d9b47b936e62d1d68aea902883ac}\label{shell_8c_a83a0d9b47b936e62d1d68aea902883ac} 
+int {\bfseries new\+Cmd\+Ready} = 0
+\begin{DoxyCompactList}\small\item\em Flag indiquant qu\textquotesingle{}une nouvelle commande est prête. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+Implémentation d\textquotesingle{}un shell de commandes pour le microcontrôleur STM32\+G474\+RET6. 
+
+\begin{DoxyAuthor}{Auteur}
+nicolas 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+1 Octobre 2023
+\end{DoxyDate}
+Ce fichier implémente un shell interactif permettant à l\textquotesingle{}utilisateur d\textquotesingle{}interagir avec le microcontrôleur via une interface UART. Il gère différentes commandes comme le contrôle de la vitesse du moteur et la lecture du courant. 
+
+\doxysubsection{Documentation des fonctions}
+\Hypertarget{shell_8c_ae494a9643f29b87d6d81e5264e60e57b}\index{shell.c@{shell.c}!HAL\_UART\_RxCpltCallback@{HAL\_UART\_RxCpltCallback}}
+\index{HAL\_UART\_RxCpltCallback@{HAL\_UART\_RxCpltCallback}!shell.c@{shell.c}}
+\doxysubsubsection{\texorpdfstring{HAL\_UART\_RxCpltCallback()}{HAL\_UART\_RxCpltCallback()}}
+{\footnotesize\ttfamily \label{shell_8c_ae494a9643f29b87d6d81e5264e60e57b} 
+void HAL\+\_\+\+UART\+\_\+\+Rx\+Cplt\+Callback (\begin{DoxyParamCaption}\item[{UART\+\_\+\+Handle\+Type\+Def \texorpdfstring{$\ast$}{*}}]{huart}{}\end{DoxyParamCaption})}
+
+
+
+Callback appelé lors de la réception d\textquotesingle{}un caractère UART. 
+
+Cette fonction est appelée automatiquement lorsqu\textquotesingle{}un caractère est reçu sur l\textquotesingle{}UART. Elle met à jour le flag de réception et réactive l\textquotesingle{}interruption pour le prochain caractère.
+
+
+\begin{DoxyParams}{Paramètres}
+{\em huart} & Pointeur vers la structure de l\textquotesingle{}UART utilisé \\
+\hline
+\end{DoxyParams}
+\Hypertarget{shell_8c_a1e1a7212cd1e25d36ce85620f03f996e}\index{shell.c@{shell.c}!Shell\_Init@{Shell\_Init}}
+\index{Shell\_Init@{Shell\_Init}!shell.c@{shell.c}}
+\doxysubsubsection{\texorpdfstring{Shell\_Init()}{Shell\_Init()}}
+{\footnotesize\ttfamily \label{shell_8c_a1e1a7212cd1e25d36ce85620f03f996e} 
+void Shell\+\_\+\+Init (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Initialise le shell. 
+
+Cette fonction initialise les buffers et l\textquotesingle{}UART, puis affiche le message de bienvenue et le prompt initial. \Hypertarget{shell_8c_a9f70d5542e7f7f470ff7cd7d482caeb7}\index{shell.c@{shell.c}!Shell\_Loop@{Shell\_Loop}}
+\index{Shell\_Loop@{Shell\_Loop}!shell.c@{shell.c}}
+\doxysubsubsection{\texorpdfstring{Shell\_Loop()}{Shell\_Loop()}}
+{\footnotesize\ttfamily \label{shell_8c_a9f70d5542e7f7f470ff7cd7d482caeb7} 
+void Shell\+\_\+\+Loop (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Boucle principale du shell. 
+
+Gère la réception des caractères, l\textquotesingle{}interprétation des commandes et leur exécution. Les commandes supportées sont \+:
+\begin{DoxyItemize}
+\item Whereis\+Brian? \+: Affiche une phrase humoristique
+\item help \+: Affiche l\textquotesingle{}aide
+\item start \+: Démarre le PWM
+\item stop \+: Arrête le PWM
+\item current \+: Affiche la mesure de courant
+\item speed \mbox{[}valeur\mbox{]} \+: Change la vitesse du moteur 
+\end{DoxyItemize}Calcul du courant à partir de la mesure ADC Utilise les paramètres suivants \+:
+\begin{DoxyItemize}
+\item Sensibilité du capteur \+: 0.\+05 V/A
+\item Tension max ADC \+: 3.\+3V
+\item Résolution ADC \+: 4096 points
+\item Offset \+: 0
+\end{DoxyItemize}
+
+\doxysubsection{Documentation des variables}
+\Hypertarget{shell_8c_a835573497a60b314a9bf5a6fcac9602a}\index{shell.c@{shell.c}!started@{started}}
+\index{started@{started}!shell.c@{shell.c}}
+\doxysubsubsection{\texorpdfstring{started}{started}}
+{\footnotesize\ttfamily \label{shell_8c_a835573497a60b314a9bf5a6fcac9602a} 
+uint8\+\_\+t started\mbox{[}$\,$\mbox{]}}
+
+{\bfseries Valeur initiale \+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ }
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*"{}}}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n|\ Welcome\ on\ Nucleo-\/STM32G474\ |"{}}}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*"{}}}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n"{}}}
+
+\end{DoxyCode}
+
+
+Message de bienvenue affiché au démarrage. 
+

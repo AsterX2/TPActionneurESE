@@ -1,0 +1,89 @@
+\doxysection{Référence du fichier mylibs/cmd\+\_\+speed.c}
+\hypertarget{cmd__speed_8c}{}\label{cmd__speed_8c}\index{mylibs/cmd\_speed.c@{mylibs/cmd\_speed.c}}
+
+
+Gestion du contrôle de la vitesse moteur par PWM.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include "{}tim.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{cmd__speed_8c_a4757213337112f22dc28ea33dec9f248}\label{cmd__speed_8c_a4757213337112f22dc28ea33dec9f248} 
+\#define {\bfseries alpha\+\_\+\+MAX}~1913
+\begin{DoxyCompactList}\small\item\em Valeur maximale du rapport cyclique (90\% de la période) Cette valeur limite la puissance maximale fournie au moteur. \end{DoxyCompactList}\item 
+\Hypertarget{cmd__speed_8c_a220b24bbfc1baa03a6a77326ca454774}\label{cmd__speed_8c_a220b24bbfc1baa03a6a77326ca454774} 
+\#define {\bfseries alpha\+\_\+\+MID}~1063
+\begin{DoxyCompactList}\small\item\em Valeur moyenne du rapport cyclique (50\% de la période) Utilisée comme point de départ lors du démarrage du moteur. \end{DoxyCompactList}\item 
+\Hypertarget{cmd__speed_8c_a66278517039270558534d538aef0ed69}\label{cmd__speed_8c_a66278517039270558534d538aef0ed69} 
+\#define {\bfseries RAMP\+\_\+\+DELAY}~10
+\begin{DoxyCompactList}\small\item\em Délai entre chaque pas de la rampe en millisecondes Permet une accélération progressive du moteur. \end{DoxyCompactList}\item 
+\Hypertarget{cmd__speed_8c_a1cecac5835f045c76e5d982dd7c33fc5}\label{cmd__speed_8c_a1cecac5835f045c76e5d982dd7c33fc5} 
+\#define {\bfseries RAMP\+\_\+\+STEP}~5
+\begin{DoxyCompactList}\small\item\em Pas d\textquotesingle{}incrémentation du rapport cyclique Définit la granularité du contrôle de vitesse. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{cmd__speed_8c_a68c24e470ca371953a65e33a7a96b6a7}{start\+\_\+\+PWM}} (TIM\+\_\+\+Handle\+Type\+Def htim, uint32\+\_\+t channel)
+\begin{DoxyCompactList}\small\item\em Démarre la génération PWM. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{cmd__speed_8c_a5961f72638d00756f905f4e316223c6a}{stop\+\_\+\+PWM}} (TIM\+\_\+\+Handle\+Type\+Def htim, uint32\+\_\+t channel)
+\begin{DoxyCompactList}\small\item\em Arrête la génération PWM. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{cmd__speed_8c_a22b804736f5648d52f639b2647d4ed13}\label{cmd__speed_8c_a22b804736f5648d52f639b2647d4ed13} 
+ADC\+\_\+\+Handle\+Type\+Def {\bfseries hadc1}
+\begin{DoxyCompactList}\small\item\em Handle de l\textquotesingle{}ADC utilisé pour la mesure de courant. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+Gestion du contrôle de la vitesse moteur par PWM. 
+
+\begin{DoxyAuthor}{Auteur}
+Mundus\+Est 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+13 Novembre 2024
+\end{DoxyDate}
+Ce fichier contient les fonctions de contrôle du moteur via PWM, permettant de démarrer, arrêter et réguler la vitesse du moteur. Il gère également la mesure du courant via l\textquotesingle{}ADC. 
+
+\doxysubsection{Documentation des fonctions}
+\Hypertarget{cmd__speed_8c_a68c24e470ca371953a65e33a7a96b6a7}\index{cmd\_speed.c@{cmd\_speed.c}!start\_PWM@{start\_PWM}}
+\index{start\_PWM@{start\_PWM}!cmd\_speed.c@{cmd\_speed.c}}
+\doxysubsubsection{\texorpdfstring{start\_PWM()}{start\_PWM()}}
+{\footnotesize\ttfamily \label{cmd__speed_8c_a68c24e470ca371953a65e33a7a96b6a7} 
+void start\+\_\+\+PWM (\begin{DoxyParamCaption}\item[{TIM\+\_\+\+Handle\+Type\+Def}]{htim}{, }\item[{uint32\+\_\+t}]{channel}{}\end{DoxyParamCaption})}
+
+
+
+Démarre la génération PWM. 
+
+Cette fonction configure et démarre la génération PWM sur les deux canaux en mode complémentaire. Elle initialise également les rapports cycliques à 50\% pour un démarrage équilibré.
+
+
+\begin{DoxyParams}{Paramètres}
+{\em htim} & Handle du timer utilisé pour la génération PWM \\
+\hline
+{\em channel} & Numéro du canal PWM à configurer \\
+\hline
+\end{DoxyParams}
+\Hypertarget{cmd__speed_8c_a5961f72638d00756f905f4e316223c6a}\index{cmd\_speed.c@{cmd\_speed.c}!stop\_PWM@{stop\_PWM}}
+\index{stop\_PWM@{stop\_PWM}!cmd\_speed.c@{cmd\_speed.c}}
+\doxysubsubsection{\texorpdfstring{stop\_PWM()}{stop\_PWM()}}
+{\footnotesize\ttfamily \label{cmd__speed_8c_a5961f72638d00756f905f4e316223c6a} 
+void stop\+\_\+\+PWM (\begin{DoxyParamCaption}\item[{TIM\+\_\+\+Handle\+Type\+Def}]{htim}{, }\item[{uint32\+\_\+t}]{channel}{}\end{DoxyParamCaption})}
+
+
+
+Arrête la génération PWM. 
+
+Cette fonction arrête la génération PWM sur le canal spécifié ainsi que sur sa sortie complémentaire. Elle est utilisée pour arrêter le moteur en toute sécurité.
+
+
+\begin{DoxyParams}{Paramètres}
+{\em htim} & Handle du timer utilisé \\
+\hline
+{\em channel} & Numéro du canal PWM à arrêter \\
+\hline
+\end{DoxyParams}

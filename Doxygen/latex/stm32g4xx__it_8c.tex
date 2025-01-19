@@ -1,0 +1,98 @@
+\doxysection{Référence du fichier stm32g4xx\+\_\+it.\+c}
+\hypertarget{stm32g4xx__it_8c}{}\label{stm32g4xx__it_8c}\index{stm32g4xx\_it.c@{stm32g4xx\_it.c}}
+
+
+Interrupt Service Routines.  
+
+
+{\ttfamily \#include "{}main.\+h"{}}\newline
+{\ttfamily \#include "{}stm32g4xx\+\_\+it.\+h"{}}\newline
+\doxysubsubsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{stm32g4xx__it_8c_a6ad7a5e3ee69cb6db6a6b9111ba898bc}\label{stm32g4xx__it_8c_a6ad7a5e3ee69cb6db6a6b9111ba898bc} 
+void {\bfseries NMI\+\_\+\+Handler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles Non maskable interrupt. \end{DoxyCompactList}\item 
+\Hypertarget{stm32g4xx__it_8c_a2bffc10d5bd4106753b7c30e86903bea}\label{stm32g4xx__it_8c_a2bffc10d5bd4106753b7c30e86903bea} 
+void {\bfseries Hard\+Fault\+\_\+\+Handler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles Hard fault interrupt. \end{DoxyCompactList}\item 
+\Hypertarget{stm32g4xx__it_8c_a3150f74512510287a942624aa9b44cc5}\label{stm32g4xx__it_8c_a3150f74512510287a942624aa9b44cc5} 
+void {\bfseries Mem\+Manage\+\_\+\+Handler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles Memory management fault. \end{DoxyCompactList}\item 
+\Hypertarget{stm32g4xx__it_8c_a850cefb17a977292ae5eb4cafa9976c3}\label{stm32g4xx__it_8c_a850cefb17a977292ae5eb4cafa9976c3} 
+void {\bfseries Bus\+Fault\+\_\+\+Handler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles Prefetch fault, memory access fault. \end{DoxyCompactList}\item 
+\Hypertarget{stm32g4xx__it_8c_a1d98923de2ed6b7309b66f9ba2971647}\label{stm32g4xx__it_8c_a1d98923de2ed6b7309b66f9ba2971647} 
+void {\bfseries Usage\+Fault\+\_\+\+Handler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles Undefined instruction or illegal state. \end{DoxyCompactList}\item 
+\Hypertarget{stm32g4xx__it_8c_a3e5ddb3df0d62f2dc357e64a3f04a6ce}\label{stm32g4xx__it_8c_a3e5ddb3df0d62f2dc357e64a3f04a6ce} 
+void {\bfseries SVC\+\_\+\+Handler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles System service call via SWI instruction. \end{DoxyCompactList}\item 
+\Hypertarget{stm32g4xx__it_8c_adbdfb05858cc36fc520974df37ec3cb0}\label{stm32g4xx__it_8c_adbdfb05858cc36fc520974df37ec3cb0} 
+void {\bfseries Debug\+Mon\+\_\+\+Handler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles Debug monitor. \end{DoxyCompactList}\item 
+\Hypertarget{stm32g4xx__it_8c_a6303e1f258cbdc1f970ce579cc015623}\label{stm32g4xx__it_8c_a6303e1f258cbdc1f970ce579cc015623} 
+void {\bfseries Pend\+SV\+\_\+\+Handler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles Pendable request for system service. \end{DoxyCompactList}\item 
+\Hypertarget{stm32g4xx__it_8c_ab5e09814056d617c521549e542639b7e}\label{stm32g4xx__it_8c_ab5e09814056d617c521549e542639b7e} 
+void {\bfseries Sys\+Tick\+\_\+\+Handler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles System tick timer. \end{DoxyCompactList}\item 
+\Hypertarget{stm32g4xx__it_8c_a0c3390d4dc5cfceccbeda71aa672d99d}\label{stm32g4xx__it_8c_a0c3390d4dc5cfceccbeda71aa672d99d} 
+void {\bfseries DMA1\+\_\+\+Channel2\+\_\+\+IRQHandler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles DMA1 channel2 global interrupt. \end{DoxyCompactList}\item 
+\Hypertarget{stm32g4xx__it_8c_a3e8fca6e2f18e433a9fbc3d2dcc0b411}\label{stm32g4xx__it_8c_a3e8fca6e2f18e433a9fbc3d2dcc0b411} 
+void {\bfseries ADC1\+\_\+2\+\_\+\+IRQHandler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles ADC1 and ADC2 global interrupt. \end{DoxyCompactList}\item 
+\Hypertarget{stm32g4xx__it_8c_ab19e96bc9fe4483b9fdf25047c61238e}\label{stm32g4xx__it_8c_ab19e96bc9fe4483b9fdf25047c61238e} 
+void {\bfseries TIM1\+\_\+\+UP\+\_\+\+TIM16\+\_\+\+IRQHandler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles TIM1 update interrupt and TIM16 global interrupt. \end{DoxyCompactList}\item 
+\Hypertarget{stm32g4xx__it_8c_aa96795d8fb4793f60135fad74ecb1d70}\label{stm32g4xx__it_8c_aa96795d8fb4793f60135fad74ecb1d70} 
+void {\bfseries TIM1\+\_\+\+TRG\+\_\+\+COM\+\_\+\+TIM17\+\_\+\+IRQHandler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles TIM1 trigger and commutation interrupts and TIM17 global interrupt. \end{DoxyCompactList}\item 
+\Hypertarget{stm32g4xx__it_8c_a0ca6fd0e6f77921dd1123539857ba0a8}\label{stm32g4xx__it_8c_a0ca6fd0e6f77921dd1123539857ba0a8} 
+void {\bfseries USART2\+\_\+\+IRQHandler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles USART2 global interrupt / USART2 wake-\/up interrupt through EXTI line 26. \end{DoxyCompactList}\item 
+\Hypertarget{stm32g4xx__it_8c_a0d108a3468b2051548183ee5ca2158a0}\label{stm32g4xx__it_8c_a0d108a3468b2051548183ee5ca2158a0} 
+void {\bfseries USART3\+\_\+\+IRQHandler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles USART3 global interrupt / USART3 wake-\/up interrupt through EXTI line 28. \end{DoxyCompactList}\item 
+\Hypertarget{stm32g4xx__it_8c_a738473a5b43f6c92b80ce1d3d6f77ed9}\label{stm32g4xx__it_8c_a738473a5b43f6c92b80ce1d3d6f77ed9} 
+void {\bfseries EXTI15\+\_\+10\+\_\+\+IRQHandler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles EXTI line\mbox{[}15\+:10\mbox{]} interrupts. \end{DoxyCompactList}\item 
+\Hypertarget{stm32g4xx__it_8c_a0839a45f331c4c067939b9c4533bbf4d}\label{stm32g4xx__it_8c_a0839a45f331c4c067939b9c4533bbf4d} 
+void {\bfseries TIM6\+\_\+\+DAC\+\_\+\+IRQHandler} (void)
+\begin{DoxyCompactList}\small\item\em This function handles TIM6 global interrupt, DAC1 and DAC3 channel underrun error interrupts. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{stm32g4xx__it_8c_a1c126854bb1813d31ab4776b21dcc51f}\label{stm32g4xx__it_8c_a1c126854bb1813d31ab4776b21dcc51f} 
+DMA\+\_\+\+Handle\+Type\+Def {\bfseries hdma\+\_\+adc1}
+\item 
+\Hypertarget{stm32g4xx__it_8c_a22b804736f5648d52f639b2647d4ed13}\label{stm32g4xx__it_8c_a22b804736f5648d52f639b2647d4ed13} 
+ADC\+\_\+\+Handle\+Type\+Def {\bfseries hadc1}
+\begin{DoxyCompactList}\small\item\em Handle de l\textquotesingle{}ADC utilisé pour la mesure de courant. \end{DoxyCompactList}\item 
+\Hypertarget{stm32g4xx__it_8c_acd9221f1aa19aebfe0b744947f2daf49}\label{stm32g4xx__it_8c_acd9221f1aa19aebfe0b744947f2daf49} 
+ADC\+\_\+\+Handle\+Type\+Def {\bfseries hadc2}
+\item 
+\Hypertarget{stm32g4xx__it_8c_a25fc663547539bc49fecc0011bd76ab5}\label{stm32g4xx__it_8c_a25fc663547539bc49fecc0011bd76ab5} 
+TIM\+\_\+\+Handle\+Type\+Def {\bfseries htim1}
+\item 
+\Hypertarget{stm32g4xx__it_8c_aa9479c261d65eecedd3d9582f7f0f89c}\label{stm32g4xx__it_8c_aa9479c261d65eecedd3d9582f7f0f89c} 
+UART\+\_\+\+Handle\+Type\+Def {\bfseries huart2}
+\item 
+\Hypertarget{stm32g4xx__it_8c_ab7c63c1b0f65db92b6a4ea19edf957e1}\label{stm32g4xx__it_8c_ab7c63c1b0f65db92b6a4ea19edf957e1} 
+UART\+\_\+\+Handle\+Type\+Def {\bfseries huart3}
+\item 
+\Hypertarget{stm32g4xx__it_8c_a1564492831a79fa18466467c3420c3c3}\label{stm32g4xx__it_8c_a1564492831a79fa18466467c3420c3c3} 
+TIM\+\_\+\+Handle\+Type\+Def {\bfseries htim6}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+Interrupt Service Routines. 
+
+\begin{DoxyAttention}{Attention}
+
+\end{DoxyAttention}
+Copyright (c) 2023 STMicroelectronics. All rights reserved.
+
+This software is licensed under terms that can be found in the LICENSE file in the root directory of this software component. If no LICENSE file comes with this software, it is provided AS-\/\+IS. 
